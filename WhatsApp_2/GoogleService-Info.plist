@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>311982115782-it44hng8j8hrccsknt2c50ao7kgj3hl7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.311982115782-it44hng8j8hrccsknt2c50ao7kgj3hl7</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBsRo7BfgpbaMioePgLixXmq5_3efesVpE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>311982115782</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kevindouglass.WhatsApp-2</string>
+	<key>PROJECT_ID</key>
+	<string>chatapp-360e8</string>
+	<key>STORAGE_BUCKET</key>
+	<string>chatapp-360e8.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:311982115782:ios:5141404e2f7c71f27880c7</string>
+	<key>DATABASE_URL</key>
+	<string>https://chatapp-360e8.firebaseio.com</string>
+</dict>
+</plist>
