@@ -105,6 +105,7 @@ class FUser {
         fullname = firstname + " " + lastname
         if let avat = _dictionary[kAVATAR] {
             avatar = avat as! String
+            //avatar = avat
         } else {
             avatar = ""
         }
@@ -204,16 +205,18 @@ class FUser {
         
         Auth.auth().createUser(withEmail: email, password: password, completion: { (firuser, error) in
             
+            // if there are errors
             if error != nil {
                 
                 completion(error)
                 return
             }
-            
+            // if there are no errors create a fUser
             let fUser = FUser(_objectId: firuser!.user.uid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: firuser!.user.email!, _firstname: firstName, _lastname: lastName, _avatar: avatar, _loginMethod: kEMAIL, _phoneNumber: "", _city: "", _country: "")
             
-            
+            // save the fUser locally and ..
             saveUserLocally(fUser: fUser)
+            // save fUser to Firestore
             saveUserToFirestore(fUser: fUser)
             completion(error)
             
