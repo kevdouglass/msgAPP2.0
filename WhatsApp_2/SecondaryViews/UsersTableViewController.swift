@@ -10,9 +10,8 @@ import UIKit
 import Firebase
 import ProgressHUD
 
-class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
-    // *regquired for protocal
-   
+class UsersTableViewController: UITableViewController, UISearchResultsUpdating, UserTableViewCellDelegate {
+  
     /*func updateSearchResults(for searchController: UISearchController) {
         
     }
@@ -37,13 +36,14 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
 
         self.title = "Users"
         navigationItem.largeTitleDisplayMode = .never
+        //navigationItem.title
         
         // instantiate new #View controller
         // appears under table view data
         // if no data then no tableView lines
         tableView.tableFooterView = UIView()
         
-        
+        // access navigation items: put search Controller in Nav location
         navigationItem.searchController = searchController
         
         searchController.searchResultsUpdater = self
@@ -57,6 +57,7 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // code for # of sections - when search bar is active
+        // MARK: Dynamically check if fUser is searching
         if searchController.isActive && searchController.searchBar.text != "" {
             return 1
         } else {
@@ -66,12 +67,12 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.isActive && searchController.searchBar.text != "" {
-            return filteredUsers.count
+            return filteredUsers.count //holds results 4 searchBar
         } else {
             // find section Title
             let sectionTitle = self.sectionTitleList[section]
             
-            // user for Given Title
+            // find user for Given Title
             let users = self.allUsersGrouped[sectionTitle]
             
             return users!.count
@@ -84,7 +85,9 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UserTableViewCell
 
         // Configure the cell...
+            // dynamiccally set user
             var user: FUser
+            // check "Search Mode" -> search filter user works
             if searchController.isActive && searchController.searchBar.text != "" {
                 user = filteredUsers[indexPath.row]
             } else {
@@ -97,6 +100,7 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
             }
             cell.generateCellWith(fUser: user, indexPath: indexPath)
             //cell.generateCellWith(fUser: allUsers[indexPath.row], indexPath: indexPath)
+            cell.delegate = self
 
         return cell
     }
@@ -106,6 +110,7 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
     // will return the *HEADER for each section (A,B,C,D...Z)
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
+        // CHECK IF USER IS searching
         if searchController.isActive && searchController.searchBar.text != "" {
             return ""
         } else {
@@ -116,6 +121,7 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
     
     // RETURN the index of the section
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        // Check if user is searching
         if searchController.isActive && searchController.searchBar.text != "" {
             return nil
         } else {
@@ -123,15 +129,42 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
         }
     }
     
+    
+    // when click on segment controller ..
+    // this will switch/ jump to users
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        
         return index
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // create fUser object
+        var user: FUser
+        
+        // check if the user is in Search mode
+        if searchController.isActive && searchController.searchBar.text != "" {
+            user = filteredUsers[indexPath.row]
+        } else {
+            let sectionTitle = self.sectionTitleList[indexPath.section]
+            
+            let users = self.allUsersGrouped[sectionTitle]
+            
+            user = users![indexPath.row]
+            
+        }
+        //MARK: start private chat
+        startPrivateChat(user1: FUser.currentUser()!, user2: user)
+        
+        
+        
     }
     
     
     
-    
-    
-    // Mark: Load users
+    //MARK: Load users
     // filter by:
     // CIty
     // COuntry
@@ -178,7 +211,7 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
                 return
             }
             
-            // check if snapshot has data (USER)
+            //MARK: check if snapshot has data (USER)
             if !querySnapshot.isEmpty {
                 // go through snapshot of USER: Document-Firebase
                 for userDictionary in (querySnapshot.documents) {
@@ -186,17 +219,13 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
                     let fUser = FUser(_dictionary: userDictionary)
                     
                     // if the user is logged in - want to make sure they are not only viewing their profile
-                   
                     if fUser.objectId != FUser.currentId() {
                         self.allUsers.append(fUser)
                     }
- 
                 }
-                
                 // MARK:split Users to groups/ Sorting
                 self.splitDataIntoSections()
                 self.tableView.reloadData()
- 
             }
             self.tableView.reloadData()
             ProgressHUD.dismiss()
@@ -204,7 +233,7 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     
-    //mark: IBACTIONs
+    //MARK: IBACTIONs
     
     @IBAction func fiterSegmentValueChanged(_ sender: UISegmentedControl) {
         
@@ -233,7 +262,7 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchText: searchController.searchBar.text!) // takes texgt and filters
+        filterContentForSearchText(searchText: searchController.searchBar.text!) // takes text and filters users
     }
     
     //MARK: Helper FUnctions
@@ -247,17 +276,45 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating {
             let firstChar = currentUser.firstname.first!
             
             let firstCharString = "\(firstChar)"
-            // check if first character of Users name matches the section
+            // check if first character of Users name matches the section ..
+            // this will allow section in form of (A, B, C, .. Z)
             if firstCharString != sectionTitle {
                 sectionTitle = firstCharString
                 self.allUsersGrouped[sectionTitle] = []
                 
                 self.sectionTitleList.append(sectionTitle)
             }
+            // apend the user first letter to array
             self.allUsersGrouped[firstCharString]?.append(currentUser)
         }
         
     }
+    //MARK: UserTableViewCellDelegate
     
+    // *regquired for protocal
+      // need to make sure same index path
+      func didTapAvatarImage(indexPath: IndexPath) {
+          print("user avatar tap at \(indexPath)")
+        //MARK: programatically instantiate new viewController
+        let profileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(identifier: "profileView") as! ProfileViewTableViewController
+     
+        //MARK: show user in ProfileViewController
+        var user: FUser
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            user = filteredUsers[indexPath.row]
+        } else {
+            let sectionTitle = self.sectionTitleList[indexPath.section]
+            
+            let users = self.allUsersGrouped[sectionTitle]
+            
+            user = users![indexPath.row]
+        }
+    
+        // pass current user to profile view controller
+        profileVC.user = user
+        //MARK: Present our View Controller
+        self.navigationController?.pushViewController(profileVC, animated: true)
+    }
     
 }

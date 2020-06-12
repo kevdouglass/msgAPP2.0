@@ -25,6 +25,15 @@ class WelcomeViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //MARK: IBActions
     
     @IBAction func logginButtonPressed(_ sender: Any) {
@@ -41,6 +50,13 @@ class WelcomeViewController: UIViewController {
         }
     }
     
+    
+    
+    
+    
+    
+    
+    
     @IBAction func registerButtonPressed(_ sender: Any) {
        // print("register")
         dismissKeyboard()
@@ -53,14 +69,10 @@ class WelcomeViewController: UIViewController {
             } else {
                 ProgressHUD.showError("Passwords don't match!")
             }
-           
         } else {
             ProgressHUD.showError("All fields are required!")
         }
-
-
     }
-    
     @IBAction func backgroundTap(_ sender: Any) {
         print("dismiss")
         dismissKeyboard()
@@ -85,6 +97,10 @@ class WelcomeViewController: UIViewController {
         }
     }
     
+    
+    
+    
+    
     func registerUser() {
         print("register")
         // access segue
@@ -95,15 +111,25 @@ class WelcomeViewController: UIViewController {
     }
     
     
+    
+    
+    
     func dismissKeyboard() -> Void {
         self.view.endEditing(false)
     }
+    
+    
+    
+    
     
     func cleanTextFields() -> Void {
         emailTextField.text = ""
         passwordTextField.text = ""
         repeatPasswordTextField.text = ""
     }
+    
+    
+    
     
     
     // #MARK: Go to APP
@@ -124,6 +150,11 @@ class WelcomeViewController: UIViewController {
         self.present(mainView, animated: true, completion: nil)
         
     }
+    
+    
+    
+    
+    
     
     // MARK: Navigation
     

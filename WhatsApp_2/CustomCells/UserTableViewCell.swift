@@ -8,17 +8,24 @@
 
 import UIKit
 
-protocol UserTableViewCellDelegate: UITableViewCell {
+//MARK: user table view cell 'Delegate'
+protocol UserTableViewCellDelegate {
+    // used to make sure fUser is connected between the 2-UIViewCOntrollers
     func didTapAvatarImage(indexPath: IndexPath)
     
 }
+
+
 
 class UserTableViewCell: UITableViewCell {
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
     
-    var indexPath: IndexPath!
+  var indexPath: IndexPath!
+    var delegate: UserTableViewCellDelegate?
+    
+    
     var tapGestureRecognizer = UITapGestureRecognizer() // user tap on #IMG
     
     
@@ -59,8 +66,12 @@ class UserTableViewCell: UITableViewCell {
     
     // check if there was avatar tap for gesture recognizer
     @objc func avatarTap() {
-        print("Avatar tap at \(indexPath)")
-        print("Avatar tap at \(indexPath)")
+        //MARK: everytime this is used we need to notify the tableView cell
+        // notify using Delegates that this cell was tapped
+        delegate!.didTapAvatarImage(indexPath: indexPath)
+        
+//        print("Avatar tap at \(indexPath)")
+//        print("Avatar tap at \(indexPath)")
     }
     
 }

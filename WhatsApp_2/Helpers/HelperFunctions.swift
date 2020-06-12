@@ -67,6 +67,73 @@ func imageFromData(pictureData: String, withBlock: (_ image: UIImage?) -> Void) 
     
 }
 
+
+
+
+
+//MARK: For Calls and Chats: get message data from Firebase and return MSGs
+// param: array of DocumentSnapshot
+// return the array as a Dictionary
+func dictionaryFromSnapshots(snapshots: [DocumentSnapshot]) -> [NSDictionary] {
+    
+    var allMessages: [NSDictionary] = []
+    
+    // loop through all snapshots in Documents in Firebase
+    for snapMsg in snapshots {
+        // append the msgs to the empty NSDictionary
+        allMessages.append(snapMsg.data() as! NSDictionary)
+    }
+    
+    return allMessages
+}
+
+
+
+//MARK: Format Date Function
+
+func timeElapsed(date: Date) -> String {
+    // count how many seconds has passed since previous date
+    let seconds = NSDate().timeIntervalSince(date)
+    
+    var elapsed: String?
+    
+    // check how long ago the message was
+    if (seconds < 60) {                     // if less than 60 SECONDs
+        // within passed 60 seconds..
+        elapsed = "Just now"
+    } else if (seconds < 60 * 60) {         // if 1 or more MINUTEs
+        let minutes = Int(seconds / 60)
+        
+        var minText = "min"
+        if minutes > 1 {
+            minText = "mins"
+        }
+        elapsed = "\(minutes) \(minText)"
+    } else if (seconds < 24 * 60 * 60) {    // if Under 24 hours
+        let hours = Int(seconds / (60 * 60))
+        var hoursText = "hour"
+        if hours > 1 {
+            hoursText = "hours"
+        }
+        elapsed = "\(hours) \(hoursText)"
+    } else {                                  // else Format by day
+        let currentDateFormatter = dateFormatter()
+        currentDateFormatter.dateFormat = "dd/MM/YYYY"
+        
+        elapsed = "\(currentDateFormatter.string(from: date))"
+    }
+    return elapsed!
+}
+
+
+
+
+
+
+
+
+
+
 // Mark: UIImageExtension
 /**
   take img and turn it round
