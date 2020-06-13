@@ -9,10 +9,8 @@
 import UIKit
 import FirebaseFirestore
 
-class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
- 
-    
-
+class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, RecentChatsTableViewCellDelegate, UISearchResultsUpdating {
+  
    
     @IBOutlet weak var tableView: UITableView!
     
@@ -23,31 +21,56 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // import a <#Listener> from FireBase
     var recentListener: ListenerRegistration! // listens for new changes
     
+    // instantiate a search bar controller
+    let myChatSearchController = UISearchController(searchResultsController: nil)
+    
+    
     override func viewWillAppear(_ animated: Bool) {
+        //MARK: load recent chats
         loadRecentChats()
-        
         tableView.tableFooterView =  UIView()
         
     }
     
+    
+    //MARK: remove the listener when user is not logged in to save on server costs
     override func viewWillDisappear(_ animated: Bool) {
         //MARK: when will the view disapeer
+        recentListener.remove()
     }
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //MARK: make CHAT #navBar big title
         navigationController?.navigationBar.prefersLargeTitles = true
+        //MARK: setup Search bar
+        navigationItem.searchController = myChatSearchController
+        navigationItem.hidesSearchBarWhenScrolling = true // hide search bar when scrolling
+        
+        myChatSearchController.searchResultsUpdater = self // object in charge of updating results in search controller
+        //myChatSearchController.dimsBackgroundDuringPresentation = false   // **New: same as obscureBackgroudDuringPresentation
+        // last line (55) same as below 57
+        myChatSearchController.obscuresBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        
         
         //MARK: load recent chats
-        loadRecentChats()
+        //loadRecentChats()
+        setTableViewHeader()
 
     }
     
     
     
+    
+    
     //MARK: IBACTIONS
+    
+    
     @IBAction func createNewChatButtonPressed(_ sender: Any) {
         
         // display table view
@@ -69,16 +92,34 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //print("we have \(recentChats.count) recents")
-        return recentChats.count
+        if myChatSearchController.isActive && myChatSearchController.searchBar.text != "" {
+            return filteredChats.count
+        } else {
+            
+            return recentChats.count
+        }
      }
      
+    
+    
+    
     // setup UI Table Viewcell
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell", for: indexPath) as! RecentChatsTableViewCell
        
+        //MARK: update our view to know it is now a delegate of tableView Cell
+        cell.delegate = self
+        
         //MARK: Display chats to Cell
-        let recent = recentChats[indexPath.row]
+        let recent: NSDictionary!
+        
+        
+        if myChatSearchController.isActive && myChatSearchController.searchBar.text != "" {
+               recent = filteredChats[indexPath.row]
+           } else {
+               recent = recentChats[indexPath.row]
+           }
         
         cell.generateCell(recentChat: recent, indexPath: indexPath)
         
@@ -86,6 +127,9 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
      }
     
 
+    
+    
+    
     //MARK: Load Recent Chats
     func loadRecentChats() {
         // load "Documents" from 'Currnt user' in Firestore
@@ -118,5 +162,130 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         })
     }
     
+    
+    //MARK: setTableVIewHeader for "Chats" view
+    
+    func setTableViewHeader() {
+        //create 2 views
+        // add to tableView
+        
+        //create big, header view
+        // tableView.frame.width> stretch from one frame to another, height = 45 pts
+        //let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 45))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 45))
+        //create button for inside the View saying "New Group"
+        // height is 10 less than header so 5pt margin on top+bottom
+        //let buttonView = UIView(frame: CGRect(x: 0, y: 5, width: tableView.frame.width, height: 35))
+        let buttonView = UIView(frame: CGRect(x: 0, y: 5, width: tableView.frame.width, height: 35))
+        
+        // take length of tableVIew and subtract by 110 so it ends up towards the right hand side of the header for tableView, 10 pt margin
+        //let buttonPosition = tableView.frame.width - 110
+        let buttonPosition = tableView.frame.width - 150
 
+        let groupButton = UIButton(frame: CGRect(x: buttonPosition, y: 10, width: 100, height: 20))
+        
+        //MARK: add target allows USER to tap button
+        groupButton.addTarget(self, action: #selector(self.groupButtonPressed), for: .touchUpInside)
+        
+        // set button/ title
+        groupButton.setTitle("New Group", for: .normal)
+        // set button text color
+        let buttonColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+        groupButton.setTitleColor(buttonColor, for: .normal)
+        
+        // set line above/ between chats tableView
+        let lineSeperatorHeight = headerView.frame.height - 1
+        let lineSeperatorWidth = headerView.frame.width
+        let lineView = UIView(frame: CGRect(x: 0, y: lineSeperatorHeight, width: lineSeperatorWidth, height: 1))
+        // set color for lineView/ seperator
+        lineView.backgroundColor = #colorLiteral(red: 0.8319024444, green: 0.8269578815, blue: 0.8357037306, alpha: 1)
+        
+        // add buttons and view components to tableView-header
+        buttonView.addSubview(groupButton)
+        headerView.addSubview(buttonView)
+        headerView.addSubview(lineView)
+        tableView.tableHeaderView = headerView
+    }
+    
+
+    @objc func groupButtonPressed() {
+        print("Hello button was pressed")
+    }
+    
+    
+    //MARK: RecentChatCell Delegate:
+    //want our avatarTap to display the profileView
+    func didTapAvatarImage(indexPath: IndexPath) {
+        //access the "Filtered-recent chats element
+       // let recentChat =
+        
+        let recentChat: NSDictionary!
+         
+         // checks dictionary items for search bar use
+         if myChatSearchController.isActive && myChatSearchController.searchBar.text != "" {
+                recentChat = filteredChats[indexPath.row]
+            } else {
+                recentChat = recentChats[indexPath.row]
+            }
+         
+        
+        //Check if Private or Group Chat
+        if recentChat[kTYPE] as! String == kPRIVATE {
+            
+            //access firestore user -> userID -> Document (path) = where path = recentChat[withUSeruserID] as! string -> get documnet
+            // kWITHUSERuserID is on path so dont have to search
+            reference(.User).document(recentChat[kWITHUSERUSERID] as! String).getDocument { (userSnapshot, error) in
+                print(userSnapshot)
+                guard let snapshot = userSnapshot else { return }
+                
+                if snapshot.exists {
+                    let userDict = snapshot.data() as! NSDictionary
+                    
+                    let tempUser = FUser(_dictionary: userDict)
+                    
+                    
+                    //take the user and get profile view, then display it
+                    self.showUserProfile(user: tempUser)
+                }
+                
+                
+                
+            }
+            
+        }
+        
+      }
+    
+    //MARK: Display our user
+    func showUserProfile(user: FUser) {
+        let profileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(identifier: "profileView") as! ProfileViewTableViewController
+        
+        profileVC.user = user
+        
+        self.navigationController?.pushViewController(profileVC, animated: true)
+    }
+    
+    
+    
+    
+    
+    
+    //MARK: Search Controller Functions
+    
+    func filtterContentForSearchText(searchText: String, scope: String = "All") {
+        filteredChats = recentChats.filter({ (recentChat) -> Bool in
+            return (recentChat[kWITHUSERFULLNAME] as! String).lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        filtterContentForSearchText(searchText: searchController.searchBar.text!)
+    }
+    
+    
+    
+    
+    
 }
