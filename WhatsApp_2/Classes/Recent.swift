@@ -137,5 +137,54 @@ func createRecentItems(userId: String, chatRoomId: String, members: [String], wi
     //MARK: Save the recent Chat from the recent dictionary for Firebase
     localReference.setData(recent)
     
+}
+
+//MARK: Restart Chat
+
+func restartRecentChat(recent: NSDictionary) {
     
+    
+    if recent[kTYPE] as! String == kPRIVATE {
+        // our recent was a private Chat
+
+        createRecentChats(members: recent[kMEMBERSTOPUSH] as! [String], chatRoomId: recent[kCHATROOMID] as! String, withUserName: FUser.currentUser()!.firstname as! String, typeOfChat: kPRIVATE, users:  [FUser.currentUser()!], avatarOfGroup: nil)
+    }
+    
+    if recent[kTYPE] as! String == kGROUP {
+        
+        createRecentChats(members: recent[kMEMBERSTOPUSH] as! [String], chatRoomId: recent[kCHATROOMID]
+            as! String, withUserName: recent[kWITHUSERUSERNAME] as! String, typeOfChat: kGROUP, users: nil, avatarOfGroup: recent[kAVATAR] as? String)
+        
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//MARK: Delete Recent CHats
+
+func deleteRecentChat(recentChatDictionary: NSDictionary) {
+    
+    if let recentID = recentChatDictionary[kRECENTID] {
+        // if we have a recent ID then we access our "Recent" file and say what we want to delete
+        
+        //MARK: >>    DELETE! < FIreDOcument Item
+        reference(.Recent).document(recentID as! String).delete()
+    }
 }

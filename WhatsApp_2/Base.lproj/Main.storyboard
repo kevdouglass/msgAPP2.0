@@ -292,6 +292,21 @@
             </objects>
             <point key="canvasLocation" x="1034.7826086956522" y="128.57142857142856"/>
         </scene>
+        <!--Messages View Controller-->
+        <scene sceneID="n25-vZ-NYa">
+            <objects>
+                <viewController id="rx1-aW-UJu" customClass="JSQMessagesViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hb2-7s-gc0">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="gT3-4c-uso"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yXd-sa-G8a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4771" y="1021"/>
+        </scene>
         <!--Chats-->
         <scene sceneID="bBh-8w-J8d">
             <objects>
@@ -505,7 +520,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIX-YQ-LZj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3937.68115942029" y="532.36607142857144"/>
+            <point key="canvasLocation" x="3894" y="1021"/>
         </scene>
         <!--Users Table View Controller-->
         <scene sceneID="eUu-Fu-E1L">
@@ -587,7 +602,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mdW-ey-xR9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5000" y="507"/>
+            <point key="canvasLocation" x="5535" y="1021"/>
         </scene>
         <!--Profile View Table View Controller-->
         <scene sceneID="1On-RM-0uX">
@@ -732,7 +747,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mbV-mO-0ot" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5823.188405797102" y="506.91964285714283"/>
+            <point key="canvasLocation" x="6359" y="1021"/>
         </scene>
         <!--Settings-->
         <scene sceneID="TU0-5R-ZRv">

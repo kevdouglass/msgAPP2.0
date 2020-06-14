@@ -125,8 +125,98 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         return cell
      }
-    
 
+    
+    //MARK: TableViewDelegate functions
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+    
+    
+        
+        //Create mute and Delete buttons
+        var tempRecent: NSDictionary!
+        
+       // let tempDictionary: NSDictionary!
+        if myChatSearchController.isActive && myChatSearchController.searchBar.text != "" {
+            tempRecent = filteredChats[indexPath.row]
+        } else {
+            tempRecent = recentChats[indexPath.row]
+        }
+        
+        
+        //MARK: Mute + Un-Mute
+        var muteTitle = "Unmute"
+        var mute = false
+        
+        
+        
+        if (tempRecent[kMEMBERSTOPUSH] as! [String]).contains(FUser.currentId()) {
+            muteTitle = "Mute"
+            mute = true
+        }
+        
+        
+        // DELETE last CHAT item
+        
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
+            //print("Delete \(indexPath )")
+            self.recentChats.remove(at: indexPath.row)
+            //deleteRecentChat(recentChatDictionary: tempRecent)
+            //MARK: delete the previous chat
+            deleteRecentChat(recentChatDictionary: tempRecent)
+            self.tableView.reloadData()
+            
+        }
+        
+        
+        let muteAction = UITableViewRowAction(style: .default, title: muteTitle) { (action, indexPath) in
+            print("Mute \(indexPath)")
+        }
+        //let m = UISwipeActionsConfiguration(s)
+        
+        muteAction.backgroundColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+        
+        return [deleteAction, muteAction]
+        
+        
+        
+    }
+    
+    
+//MARK: HERE >>>>>>>>>
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // look if in search mode or not
+        var recent: NSDictionary!
+        
+        if myChatSearchController.isActive && myChatSearchController.searchBar.text != "" {
+            recent = filteredChats[indexPath.row]
+        } else {
+            recent = recentChats[indexPath.row]
+        }
+        
+        
+        //once we click on tne recent chatVIew we want to go to..
+        //MARK: Restart the Chat
+        restartRecentChat(recent: recent)
+        
+        
+        
+        //MARK: Show chatView
+        let chatVC = ChatViewController()
+        chatVC.hidesBottomBarWhenPushed = true  //hide navigation TAB
+        
+        navigationController?.pushViewController(chatVC, animated: true)
+    }
+    
+    
+    
+    
     
     
     

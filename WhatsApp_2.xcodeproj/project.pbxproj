@@ -25,6 +25,7 @@
 		0C2BCF85248EF12500032635 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2BCF84248EF12500032635 /* ChatsViewController.swift */; };
 		0C2BCF872490CE5200032635 /* ProfileViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2BCF862490CE5200032635 /* ProfileViewTableViewController.swift */; };
 		0C44EB7C2492B251006FFD40 /* RecentChatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB7B2492B251006FFD40 /* RecentChatsTableViewCell.swift */; };
+		0C44EB7E24960689006FFD40 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB7D24960689006FFD40 /* ChatViewController.swift */; };
 		0C4704C22491DE03004895D8 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4704C12491DE03004895D8 /* Recent.swift */; };
 		F7DEDB7FAEAB38CCB2601FD7 /* Pods_WhatsApp_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		0C2BCF84248EF12500032635 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		0C2BCF862490CE5200032635 /* ProfileViewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewTableViewController.swift; sourceTree = "<group>"; };
 		0C44EB7B2492B251006FFD40 /* RecentChatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentChatsTableViewCell.swift; sourceTree = "<group>"; };
+		0C44EB7D24960689006FFD40 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		0C4704C12491DE03004895D8 /* Recent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
 		0D0FE9371432D843848119D4 /* Pods-WhatsApp_2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsApp_2.release.xcconfig"; path = "Target Support Files/Pods-WhatsApp_2/Pods-WhatsApp_2.release.xcconfig"; sourceTree = "<group>"; };
 		2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhatsApp_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				0C2BCF82248E22F700032635 /* UsersTableViewController.swift */,
+				0C44EB7D24960689006FFD40 /* ChatViewController.swift */,
 				0C2BCF862490CE5200032635 /* ProfileViewTableViewController.swift */,
 			);
 			path = SecondaryViews;
@@ -296,6 +299,7 @@
 			files = (
 				0A52116B247EF14700917F2F /* HelperFunctions.swift in Sources */,
 				0A52116D247F833200917F2F /* WelcomeViewController.swift in Sources */,
+				0C44EB7E24960689006FFD40 /* ChatViewController.swift in Sources */,
 				0A521167247EEA8600917F2F /* Constants.swift in Sources */,
 				0A52114F247EE7D500917F2F /* AppDelegate.swift in Sources */,
 				0C2BCF80248E152E00032635 /* UserTableViewCell.swift in Sources */,
