@@ -199,18 +199,25 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         } else {
             recent = recentChats[indexPath.row]
         }
-        
-        
         //once we click on tne recent chatVIew we want to go to..
         //MARK: Restart the Chat
         restartRecentChat(recent: recent)
         
         
         
-        //MARK: Show chatView
+        
+        
+        
+        //MARK: Show chatView andchat view  components 
         let chatVC = ChatViewController()
         chatVC.hidesBottomBarWhenPushed = true  //hide navigation TAB
-        
+        // before we use navigateConroller we
+        chatVC.titleName = (recent[kWITHUSERFULLNAME] as? String)!
+        chatVC.memberIds = (recent[kMEMBERS] as? [String])!
+        chatVC.membersToPush = (recent[kMEMBERSTOPUSH] as? [String])!
+        chatVC.chatRoomId = (recent[kCHATROOMID] as? String)!
+        //chatVC.isGroup = false
+        chatVC.isGroup = (recent[kTYPE] as! String) == kGROUP
         navigationController?.pushViewController(chatVC, animated: true)
     }
     

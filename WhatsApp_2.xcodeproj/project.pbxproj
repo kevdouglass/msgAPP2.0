@@ -26,6 +26,11 @@
 		0C2BCF872490CE5200032635 /* ProfileViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2BCF862490CE5200032635 /* ProfileViewTableViewController.swift */; };
 		0C44EB7C2492B251006FFD40 /* RecentChatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB7B2492B251006FFD40 /* RecentChatsTableViewCell.swift */; };
 		0C44EB7E24960689006FFD40 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB7D24960689006FFD40 /* ChatViewController.swift */; };
+		0C44EB802497090D006FFD40 /* OutgoingMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB7F2497090D006FFD40 /* OutgoingMessages.swift */; };
+		0C44EB8224973811006FFD40 /* IncomingMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB8124973811006FFD40 /* IncomingMessages.swift */; };
+		0C44EB8424996ED5006FFD40 /* Camara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB8324996ED4006FFD40 /* Camara.swift */; };
+		0C44EB86249AA5A3006FFD40 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB85249AA5A3006FFD40 /* Downloader.swift */; };
+		0C44EB88249AC829006FFD40 /* PhotoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB87249AC829006FFD40 /* PhotoMediaItem.swift */; };
 		0C4704C22491DE03004895D8 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4704C12491DE03004895D8 /* Recent.swift */; };
 		F7DEDB7FAEAB38CCB2601FD7 /* Pods_WhatsApp_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */; };
 /* End PBXBuildFile section */
@@ -52,6 +57,11 @@
 		0C2BCF862490CE5200032635 /* ProfileViewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewTableViewController.swift; sourceTree = "<group>"; };
 		0C44EB7B2492B251006FFD40 /* RecentChatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentChatsTableViewCell.swift; sourceTree = "<group>"; };
 		0C44EB7D24960689006FFD40 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		0C44EB7F2497090D006FFD40 /* OutgoingMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingMessages.swift; sourceTree = "<group>"; };
+		0C44EB8124973811006FFD40 /* IncomingMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingMessages.swift; sourceTree = "<group>"; };
+		0C44EB8324996ED4006FFD40 /* Camara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camara.swift; sourceTree = "<group>"; };
+		0C44EB85249AA5A3006FFD40 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		0C44EB87249AC829006FFD40 /* PhotoMediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMediaItem.swift; sourceTree = "<group>"; };
 		0C4704C12491DE03004895D8 /* Recent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
 		0D0FE9371432D843848119D4 /* Pods-WhatsApp_2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsApp_2.release.xcconfig"; path = "Target Support Files/Pods-WhatsApp_2/Pods-WhatsApp_2.release.xcconfig"; sourceTree = "<group>"; };
 		2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhatsApp_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				0A521166247EEA8600917F2F /* Constants.swift */,
+				0C44EB85249AA5A3006FFD40 /* Downloader.swift */,
 				0A521168247EEEB000917F2F /* CollectionReference.swift */,
 				0A52116A247EF14700917F2F /* HelperFunctions.swift */,
 			);
@@ -123,6 +134,10 @@
 			children = (
 				0A521164247EEA0900917F2F /* F_User.swift */,
 				0C4704C12491DE03004895D8 /* Recent.swift */,
+				0C44EB7F2497090D006FFD40 /* OutgoingMessages.swift */,
+				0C44EB8124973811006FFD40 /* IncomingMessages.swift */,
+				0C44EB8324996ED4006FFD40 /* Camara.swift */,
+				0C44EB87249AC829006FFD40 /* PhotoMediaItem.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -301,11 +316,15 @@
 				0A52116D247F833200917F2F /* WelcomeViewController.swift in Sources */,
 				0C44EB7E24960689006FFD40 /* ChatViewController.swift in Sources */,
 				0A521167247EEA8600917F2F /* Constants.swift in Sources */,
+				0C44EB8424996ED5006FFD40 /* Camara.swift in Sources */,
 				0A52114F247EE7D500917F2F /* AppDelegate.swift in Sources */,
+				0C44EB802497090D006FFD40 /* OutgoingMessages.swift in Sources */,
 				0C2BCF80248E152E00032635 /* UserTableViewCell.swift in Sources */,
 				0C2BCF83248E22F700032635 /* UsersTableViewController.swift in Sources */,
 				0A521151247EE7D500917F2F /* SceneDelegate.swift in Sources */,
+				0C44EB86249AA5A3006FFD40 /* Downloader.swift in Sources */,
 				0A52116F24805DD600917F2F /* FinishRegistrationViewController.swift in Sources */,
+				0C44EB88249AC829006FFD40 /* PhotoMediaItem.swift in Sources */,
 				0A521165247EEA0900917F2F /* F_User.swift in Sources */,
 				0C44EB7C2492B251006FFD40 /* RecentChatsTableViewCell.swift in Sources */,
 				0A521169247EEEB000917F2F /* CollectionReference.swift in Sources */,
@@ -313,6 +332,7 @@
 				0C2BCF85248EF12500032635 /* ChatsViewController.swift in Sources */,
 				0C2BCF872490CE5200032635 /* ProfileViewTableViewController.swift in Sources */,
 				0C2BCF7E248DF78E00032635 /* SettingsTableViewController.swift in Sources */,
+				0C44EB8224973811006FFD40 /* IncomingMessages.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

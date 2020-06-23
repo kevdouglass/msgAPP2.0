@@ -158,6 +158,7 @@ class FUser {
     
     class func currentId() -> String {
         
+
         return Auth.auth().currentUser!.uid
     }
     
@@ -380,6 +381,10 @@ func userDictionaryFrom(user: FUser) -> NSDictionary {
     
 }
 
+
+
+
+//MARK: get reference to users document in firestore!!!!!!!!!!!!
 func getUsersFromFirestore(withIds: [String], completion: @escaping (_ usersArray: [FUser]) -> Void) {
     
     var count = 0
