@@ -88,8 +88,11 @@ class Camara {
     
     
     func PresentMultyCamara(target: UIViewController, canEdit: Bool) {
-        let builtInCamara = UIImagePickerController.SourceType.camera
-        if !UIImagePickerController.isSourceTypeAvailable(builtInCamara) {
+        
+        
+        
+        ///         let builtInCamara = UIImagePickerController.SourceType.camera
+        if !UIImagePickerController.isSourceTypeAvailable( UIImagePickerController.SourceType.camera) {
             return
         }
         
@@ -104,7 +107,8 @@ class Camara {
                 if (availableTypes as NSArray).contains(type1) {
                     imagePicker.mediaTypes = [type1, type2]
                     //imagePicker.sourceType = UIImagePickerController.SourceType.camera
-                    imagePicker.sourceType = builtInCamara
+                    //imagePicker.sourceType = builtInCamara
+                    imagePicker.sourceType =  UIImagePickerController.SourceType.camera
                 }
             }
             
@@ -141,6 +145,7 @@ class Camara {
         let imagePicker = UIImagePickerController()
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            
             if let availableTypes = UIImagePickerController.availableMediaTypes(for: .camera) {
                 
                 
@@ -150,20 +155,22 @@ class Camara {
                     imagePicker.sourceType = UIImagePickerController.SourceType.camera
                 }
             }
+            
             if UIImagePickerController.isCameraDeviceAvailable(.rear) {
                 imagePicker.cameraDevice = UIImagePickerController.CameraDevice.rear
             }
+                
             else if UIImagePickerController.isCameraDeviceAvailable(.front) {
                 imagePicker.cameraDevice = UIImagePickerController.CameraDevice.front
             }
         } else {
-            // show alert that NO CAMERA
+            // show alert that NO CAMERA available
             return
         }
         imagePicker.allowsEditing = canEdit
         imagePicker.showsCameraControls = true
         imagePicker.delegate = delegate
-        target.present(imagePicker, animated: true, completion: nil)
+        target.present(imagePicker, animated: true, completion: nil) // present te image picker to the user
         
     }
         

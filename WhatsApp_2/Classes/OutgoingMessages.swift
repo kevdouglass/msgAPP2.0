@@ -41,6 +41,40 @@ class OutgoingMessage {
 
     }
     
+    
+    
+    
+    
+    //MARK: Audio message
+    init(message: String, audio: String, senderId: String, senderName: String,
+         date: Date, status: String, type: String) {
+        myMessageDictionary = NSMutableDictionary(objects: [message, audio, senderId, senderName,
+                                                            dateFormatter().string(from: date), status, type],
+                                                  forKeys: [
+                                                    kMESSAGE as NSCopying,
+                                                    kAUDIO as NSCopying,
+                                                    kSENDERID as NSCopying,
+                                                    kSENDERNAME as NSCopying,
+                                                    kDATE as NSCopying,
+                                                    kSTATUS as NSCopying,
+                                                    kTYPE as NSCopying ])
+        //Error.self = false
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //MARK: Video Message: Outgoing
     init(message: String, videoLink: String, thumbNail: NSData, senderId: String, senderName: String, date: Date, status: String, type: String) {
         ///CREATE THUMBNAIL

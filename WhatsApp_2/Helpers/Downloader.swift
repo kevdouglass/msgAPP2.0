@@ -167,6 +167,169 @@ func uploadVideo(video: NSData, chatRoomId: String, view: UIView,
 
 
 
+
+// TO BE USED IN "INCOMINGMESSAGES.swift" file to create a VIDEO message
+func downloadVideo(videoUrl: String, completion: @escaping(_ isReadyToPlay: Bool, _ videoFileName: String) -> Void) {
+    
+    
+    let videoURL = NSURL(string: videoUrl)
+    print("DEBUG: the video URL is \(videoURL)")
+    let VideoFileName = (videoUrl.components(separatedBy: "%").last!).components(separatedBy: "?").first! // split our image URL by the "%" sign
+    print("DEBUG: file name \(VideoFileName)")
+    
+    
+    // check if file exists
+    /// save image locally so it doeasnt have to be downloaded everytime
+    if fileExistAtPathOfDocumentsDirectory(path: VideoFileName) {
+        // it exists -> it is ready to play
+        completion(true, VideoFileName)
+        
+    } else {
+        
+        // file path does NOT exist
+        ///-> so we DOWNLOAD it
+        let downloadQueue = DispatchQueue(label: "videoDownloadQueue")
+        downloadQueue.async {
+            // get data from the URL
+            let data = NSData(contentsOf: videoURL! as URL)
+            
+            if data != nil {
+                
+                // we did get something
+                // create an image from it
+                var docURL = getDocumentsURL()
+                docURL = docURL.appendingPathComponent(VideoFileName , isDirectory: false) /// not a folder -> is a file
+                data!.write(to: docURL, atomically: true) // if already same file with same file, it will make a temp file then delete the file
+                
+                
+                
+                
+                let imageToReturn = UIImage(data: data! as Data)
+
+                DispatchQueue.main.async {
+                    completion(true, VideoFileName)
+                }
+            } else {
+                
+                // data was empty
+                DispatchQueue.main.async {
+                    print("DEBUG: no video in database")
+                    ///completion(nil)
+                }
+            }
+        }
+        
+    }
+}
+
+
+
+
+
+
+//MARK: AUDIO FILEs
+func uploadAudio(audioPath: String, chatRoomId: String, view: UIView, completion: @escaping(_ audioLink: String?) -> Void) {
+    
+    
+    let progressHUD = MBProgressHUD.showAdded(to: view, animated: true)
+    progressHUD.mode = .determinateHorizontalBar            /// LOAD progress in horizontal bar
+    
+    let dateString = dateFormatter().string(from: Date())
+    
+    let audioFileName = "AudioMessages/" + FUser.currentId() + "/" + chatRoomId + "/" + dateString + ".m4a"
+    
+    let audio = NSData(contentsOfFile: audioPath)
+    
+    
+    let storageRefAudio = storage.reference(forURL: kFILEREFERENCE).child(audioFileName)
+    
+    var task: StorageUploadTask!
+    
+    task = storageRefAudio.putData(audio! as Data, metadata: nil, completion: { (metadata, error) in
+        
+        task.removeAllObservers()
+        progressHUD.hide(animated: true)
+        
+        if error != nil {
+            print("DEBUG: error couldnt upload AUDIO file at >> \(error!.localizedDescription)")
+            return
+        }
+        
+        storageRefAudio.downloadURL(completion: { (url, error) in
+            
+            guard let downloadUrl = url else {
+                completion(nil)
+                return
+            }
+
+            completion(downloadUrl.absoluteString)
+        })
+        
+    })
+    
+    task.observe(StorageTaskStatus.progress) { (snapshot) in
+        /// show % of audio download to user
+        progressHUD.progress = Float((snapshot.progress?.completedUnitCount)!) / Float((snapshot.progress?.completedUnitCount)!)
+    }
+}
+
+
+
+
+//MARK: Download Audio messages
+// TO BE USED IN "INCOMINGMESSAGES.swift" file to create a message (DOWNLOADING AUDIO)
+func downloadAudio(audioUrl: String, completion: @escaping(_ audioFileName: String) -> Void) {
+    let audioURL = NSURL(string: audioUrl)
+    print(audioUrl)
+    let audioFileName = (audioUrl.components(separatedBy: "%").last!).components(separatedBy: "?").first! // split our image URL by the "%" sign
+    print("DEBUG: file name for Audio -> \(audioFileName)")
+    
+    // save image locally so it doeasnt have to be downloaded everytime
+    if fileExistAtPathOfDocumentsDirectory(path: audioFileName) {
+        // it exists
+            completion(audioFileName) // -> we return it
+    } else {
+        // file path does NOT exist ...
+        // -> so we DOWNLOAD it
+        let downloadQueue = DispatchQueue(label: "audioDownloadQueue")
+        downloadQueue.async {
+            // get data from the URL
+            let data = NSData(contentsOf: audioURL! as URL)
+            
+            if data != nil {
+                // we did get something
+                // create an image from it
+                var docURL = getDocumentsURL()
+                docURL = docURL.appendingPathComponent(audioFileName, isDirectory: false)
+                data!.write(to: docURL, atomically: true) // if already same file with same file, it will make a temp file then delete the file
+                
+                ///let audioToReturn = UIImage(data: data! as Data)
+                
+                DispatchQueue.main.async {
+                    completion(audioFileName)
+                }
+            } else {
+                // was empty
+                DispatchQueue.main.async {
+                    print("DEBUG: no Audio saved in database")
+                    //completion(nil)
+                }
+            }
+        }
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 //MARK: Helpers for DOWNLOAD IMAGE
 
 

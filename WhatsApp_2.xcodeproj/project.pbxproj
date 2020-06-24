@@ -19,6 +19,7 @@
 		0A52116B247EF14700917F2F /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A52116A247EF14700917F2F /* HelperFunctions.swift */; };
 		0A52116D247F833200917F2F /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A52116C247F833200917F2F /* WelcomeViewController.swift */; };
 		0A52116F24805DD600917F2F /* FinishRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A52116E24805DD600917F2F /* FinishRegistrationViewController.swift */; };
+		0C1A893324A3256900049C5D /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A893224A3256900049C5D /* AudioViewController.swift */; };
 		0C2BCF7E248DF78E00032635 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2BCF7D248DF78E00032635 /* SettingsTableViewController.swift */; };
 		0C2BCF80248E152E00032635 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2BCF7F248E152E00032635 /* UserTableViewCell.swift */; };
 		0C2BCF83248E22F700032635 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2BCF82248E22F700032635 /* UsersTableViewController.swift */; };
@@ -31,6 +32,7 @@
 		0C44EB8424996ED5006FFD40 /* Camara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB8324996ED4006FFD40 /* Camara.swift */; };
 		0C44EB86249AA5A3006FFD40 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB85249AA5A3006FFD40 /* Downloader.swift */; };
 		0C44EB88249AC829006FFD40 /* PhotoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB87249AC829006FFD40 /* PhotoMediaItem.swift */; };
+		0C44EB8A24A2CDBB006FFD40 /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB8924A2CDBB006FFD40 /* VideoMessage.swift */; };
 		0C4704C22491DE03004895D8 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4704C12491DE03004895D8 /* Recent.swift */; };
 		F7DEDB7FAEAB38CCB2601FD7 /* Pods_WhatsApp_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */; };
 /* End PBXBuildFile section */
@@ -50,6 +52,7 @@
 		0A52116A247EF14700917F2F /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		0A52116C247F833200917F2F /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		0A52116E24805DD600917F2F /* FinishRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishRegistrationViewController.swift; sourceTree = "<group>"; };
+		0C1A893224A3256900049C5D /* AudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioViewController.swift; sourceTree = "<group>"; };
 		0C2BCF7D248DF78E00032635 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		0C2BCF7F248E152E00032635 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		0C2BCF82248E22F700032635 /* UsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +65,7 @@
 		0C44EB8324996ED4006FFD40 /* Camara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camara.swift; sourceTree = "<group>"; };
 		0C44EB85249AA5A3006FFD40 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		0C44EB87249AC829006FFD40 /* PhotoMediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMediaItem.swift; sourceTree = "<group>"; };
+		0C44EB8924A2CDBB006FFD40 /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
 		0C4704C12491DE03004895D8 /* Recent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
 		0D0FE9371432D843848119D4 /* Pods-WhatsApp_2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsApp_2.release.xcconfig"; path = "Target Support Files/Pods-WhatsApp_2/Pods-WhatsApp_2.release.xcconfig"; sourceTree = "<group>"; };
 		2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhatsApp_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,6 +142,8 @@
 				0C44EB8124973811006FFD40 /* IncomingMessages.swift */,
 				0C44EB8324996ED4006FFD40 /* Camara.swift */,
 				0C44EB87249AC829006FFD40 /* PhotoMediaItem.swift */,
+				0C44EB8924A2CDBB006FFD40 /* VideoMessage.swift */,
+				0C1A893224A3256900049C5D /* AudioViewController.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -330,9 +336,11 @@
 				0A521169247EEEB000917F2F /* CollectionReference.swift in Sources */,
 				0C4704C22491DE03004895D8 /* Recent.swift in Sources */,
 				0C2BCF85248EF12500032635 /* ChatsViewController.swift in Sources */,
+				0C1A893324A3256900049C5D /* AudioViewController.swift in Sources */,
 				0C2BCF872490CE5200032635 /* ProfileViewTableViewController.swift in Sources */,
 				0C2BCF7E248DF78E00032635 /* SettingsTableViewController.swift in Sources */,
 				0C44EB8224973811006FFD40 /* IncomingMessages.swift in Sources */,
+				0C44EB8A24A2CDBB006FFD40 /* VideoMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

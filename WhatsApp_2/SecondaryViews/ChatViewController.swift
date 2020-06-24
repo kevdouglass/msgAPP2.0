@@ -17,7 +17,7 @@ import FirebaseFirestore
 
 //class ChatViewController: JSQMessagesViewController{
 // add delegates for UIKit/ imagePicker
-class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, IQAudioRecorderViewControllerDelegate {
     // provide to chat viewVC (recent chats -> chatsView())
     var chatRoomId: String!
     var memberIds: [String]!
@@ -287,7 +287,9 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         // create 5 functions
         let takePhotoOrVideo = UIAlertAction(title: "Camera", style: .default) { (action) in
             
+            camera.PresentMultyCamara(target: self, canEdit: false) /// presents "CAMERA" to take photo or video *will no work on simulator * user can take photo and send to eachother now
             print("Camera")
+
         }
         
         
@@ -302,8 +304,6 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
             //camera.PresentionVideoLibrary(target: self, canEdit: false)
             camera.PresentVideoLibrary(target: self, canEdit: false) //(target: self, canEdit: false)
             print("Video Library")
-            //Camara.PresentPhotoLibrary(<#T##self: Camara##Camara#>)
-
             
         }
         
@@ -362,6 +362,13 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
             updateSendButton(isSend: false)
         } else {
             print("Audio message")
+            
+            let audioVC = AudioViewController(delegate_: self)
+            audioVC.presentAudioRecorder(target: self)
+            
+            
+            
+            
         }
     }
     
@@ -378,6 +385,84 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         self.collectionView.reloadData() // reload data to present older chats
         
     }
+    
+    
+    //MARK: to be able to see our video playing and see when anytime a user taps on a JSQ_message bubble
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {
+        
+        
+        print("tap on message at \(indexPath)")
+        
+        let messageDictionary = objectMessages[indexPath.row]
+        let messageType = messageDictionary[kTYPE] as! String
+        
+        // once we have our type we need to check if video, text, picture, location
+        switch messageType {
+        case kPICTURE:                                                  /* By Picture Message */
+            print("DEBUG: picture message tapped at \(indexPath.row)")
+            
+            /// Present the picture message on a seperate view controller
+            
+            let message = messages[indexPath.row]
+            // then access the media *photo*
+            let mediaItem = message.media as! JSQPhotoMediaItem
+            
+            
+            
+            print("DEBUG: The media item is: \(mediaItem)")
+            let photos = IDMPhoto.photos(withImages: [mediaItem.image])
+            let browser = IDMPhotoBrowser(photos: photos)
+            
+            // present the photo in browser
+            //self.present(browser!, animated: true, completion: nil)
+            self.present(browser!, animated: true, completion: nil)
+            
+            
+        case kLOCATION:                                         /* By Location */
+            print("DEBUG: location message type was  tapped")
+
+        case kVIDEO:                                           /* By Video */
+            print("DEBUG: picture message tapped")
+                // acces our array of messages and access the video mesage from it
+            let message = messages[indexPath.row]
+            let mediaItem = message.media as! VideoMessage
+            
+            let player = AVPlayer(url: mediaItem.fileURL! as URL)
+            // initialize a movie player
+            let moviePlayer = AVPlayerViewController()
+            
+            let vidSession = AVAudioSession.sharedInstance()
+            // make sure no errors
+            try! vidSession.setCategory(.playAndRecord, mode: .default , options: .defaultToSpeaker)
+            
+            moviePlayer.player = player
+            
+            
+            /// as soon as the video is open *tapped by user * ...
+            self.present(moviePlayer, animated: true) {
+                moviePlayer.player!.play()  /// it should play automagically
+            }
+     
+
+        default:
+            print("DEBUG: Unknown message tapped in collectionView")
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     // MESSAGING --------------------------- (SEND MESSAGEs)
@@ -477,6 +562,33 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
             }
             return
         }
+        
+        //MARK: send Audio * check *
+        if let audioPath = audio {
+            // we have an audio object
+            // upload it
+            uploadAudio(audioPath: audioPath, chatRoomId: chatRoomId, view: (self.navigationController?.view)!) { (audioLink) in
+                // check if we recieve the link
+                if audioLink != nil {
+                    /// we recieved an audio lnk
+                    let text = "[\(kAUDIO)]" // shown in "Recent msg" cell
+                    
+                    outgoingMessage = OutgoingMessage(message: text, audio: audioLink!, senderId: currentUser.objectId, senderName: currentUser.firstname, date: date, status: kDELIVERED, type: kAUDIO)
+                    
+                    ///play message sound for sent
+                    JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                    self.finishSendingMessage()
+                    
+                    outgoingMessage!.sendMessagetoFirebase(chatRoomId: self.chatRoomId, messageDictionary: outgoingMessage!.myMessageDictionary, memberIds: self.memberIds, membersToPush: self.membersToPush)
+                }
+            }
+            return
+        }
+        
+        
+        
+        
+        
         
         
         //MARK: JSQ_ system sound player: when user send message the phone will make a "send sound"
@@ -808,6 +920,47 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
 
         }
     }
+    
+    //MARK: IQ Audio Delegate: allows user to press/ send a Audio Recorder
+    
+    ///Audio Recorder did finish with audio path
+    func audioRecorderController(_ controller: IQAudioRecorderViewController, didFinishWithAudioAtPath filePath: String) {
+        
+        // incase user finished recording -> we send message
+        controller.dismiss(animated: true, completion: nil)
+        self.sendMessage(text: nil, date: Date(), picture: nil, location: nil, video: nil, audio: filePath)
+        
+        
+        
+    }
+    
+    
+    /// when USER cancels recording -> we cancel the view
+    func audioRecorderControllerDidCancel(_ controller: IQAudioRecorderViewController) {
+        controller.dismiss(animated: true, completion: nil)
+
+
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //MARK: Update UI: Custom Header for Chat between users
     func setCustomTitle() {
