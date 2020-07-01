@@ -127,6 +127,8 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
      }
 
     
+    
+    
     //MARK: TableViewDelegate functions
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -174,16 +176,15 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         
         let muteAction = UITableViewRowAction(style: .default, title: muteTitle) { (action, indexPath) in
-            print("Mute \(indexPath)")
+            print("Mute \(indexPath) in Chats View Controller")
+            self.updatePushMembers(recent: tempRecent, mute: mute)
         }
         //let m = UISwipeActionsConfiguration(s)
         
         muteAction.backgroundColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
         
         return [deleteAction, muteAction]
-        
-        
-        
+
     }
     
     
@@ -306,7 +307,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
 
     @objc func groupButtonPressed() {
-        print("Hello button was pressed")
+        print("DEBUG: Group button was pressed")
     }
     
     
@@ -382,7 +383,28 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    
+    //MARK: Helper functions
+    /// mute users from other users
+    func updatePushMembers(recent: NSDictionary, mute: Bool) {
+        // tell whether we should mute or unmute it
+        // get the members to push
+        
+        var membersToPush = recent[kMEMBERSTOPUSH] as! [String]
+        
+        if mute {
+            // remove our user from array as they are being MUTED
+            //let index = membersToPush.index(of: FUser.currentId())!
+
+            let index = membersToPush.firstIndex(of: FUser.currentId())!
+            membersToPush.remove(at: index)
+        } else {
+            /// they are being unMUTED
+            membersToPush.append(FUser.currentId())
+        }
+        
+        /// SAVE changes to * Firesoter * function written in Recents.Swift
+        updateExistingRecentWithNewValues(chatRoomId: recent[kCHATROOMID] as! String, members: recent[kMEMBERS] as! [String], withValues: [kMEMBERSTOPUSH : membersToPush])
+    }
     
     
 }

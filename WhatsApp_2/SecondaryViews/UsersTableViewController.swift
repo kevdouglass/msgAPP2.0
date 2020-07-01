@@ -137,6 +137,9 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating, 
         return index
     }
     
+    
+    
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -155,8 +158,26 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating, 
             user = users![indexPath.row]
             
         }
-        //MARK: start private chat
-        startPrivateChat(user1: FUser.currentUser()!, user2: user)
+        //MARK: Check if it is a blocked user
+        if !checkBlockedStatus(withUser: user) {
+            
+            //MARK: start private chat
+            let chatVC = ChatViewController()
+            chatVC.titleName = user.firstname
+            chatVC.membersToPush = [FUser.currentId(), user.objectId]
+            chatVC.memberIds = [FUser.currentId(), user.objectId]
+            chatVC.chatRoomId = startPrivateChat(user1: FUser.currentUser()!, user2: user)
+            
+            chatVC.isGroup = false
+            chatVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(chatVC, animated: true)
+            //startPrivateChat(user1: FUser.currentUser()!, user2: user)
+        } else {
+            ProgressHUD.showError("This user is not available for Chat!")
+            
+        }
+        
+
         
         
         

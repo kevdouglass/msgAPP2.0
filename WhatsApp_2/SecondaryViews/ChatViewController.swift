@@ -18,6 +18,9 @@ import FirebaseFirestore
 //class ChatViewController: JSQMessagesViewController{
 // add delegates for UIKit/ imagePicker
 class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, IQAudioRecorderViewControllerDelegate {
+    
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate /// get access to our app Delegate
     // provide to chat viewVC (recent chats -> chatsView())
     var chatRoomId: String!
     var memberIds: [String]!
@@ -44,6 +47,8 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     var oldLoad = false // for loading all messages - button
     var loadedMessagesCount = 0
     
+    ///counting for user typing
+    var typingCounter = 0
     
     
     /// Variables to hold message: array
@@ -53,6 +58,16 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     var allPictureMessages: [String] = [] // for PICS
     
     var initialLoadComplete = false     // as soon as we open chatView open the 11 messages
+    
+    
+    
+    ///AVATAR sources
+    var jsqAvatarDictionary: NSMutableDictionary?
+    var avatarImageDictionary: NSMutableDictionary?
+    var showAvatars = true
+    var firstLoad: Bool?
+    
+    
     
     var outgoingBubble = JSQMessagesBubbleImageFactory()?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
     
@@ -86,6 +101,15 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     }()
     
     
+    //MARK: RECENT > CHAT * COUNTER * <
+    override func viewWillAppear(_ animated: Bool) {
+        clearRecentCounter(chatRoomId: chatRoomId)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        clearRecentCounter(chatRoomId: chatRoomId)
+    }
+    
+    
     
     
     // FIX for Iphone x (10)
@@ -100,6 +124,9 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        /// Create typing observer to show other user when a user is *typing* ...
+        createTypingObserver()
         navigationItem.largeTitleDisplayMode = .never
         
         // create a BUTTON
@@ -109,6 +136,8 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         
+        
+        jsqAvatarDictionary = [:] //empty dicrionary
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         // set custom title for user who is in CHAT
         setCustomTitle()
@@ -269,6 +298,27 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     }
     
     
+    /// JSQ message collection view * Required for Avatar Images  >> on side of each message <<< *
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
+        
+        // get indexpath dot row to see what message to show
+        let message = messages[indexPath.row]
+        
+        // get the avatar
+        var avatar: JSQMessageAvatarImageDataSource
+        
+        if let testAvatar = jsqAvatarDictionary!.object(forKey: message.senderId) {
+            avatar = testAvatar as! JSQMessageAvatarImageDataSource
+        } else {
+            /// otherwise if user has no avatar in our Dictionary
+            avatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "avatarPlaceholder"), diameter: 70)
+        }
+        
+        return avatar
+        
+    }
+    
+    
     
     
     
@@ -310,11 +360,14 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         
         
         let shareLocation = UIAlertAction(title: "Share Location", style: .default) { (action) in
-            print("Share Location")
+            print("DEBUG: Sharing Location in ChatVIewController")
+            if self.haveAccessToUserLocation() {
+                print("Debug: location is \(kLOCATION)")
+                self.sendMessage(text: nil, date: Date(), picture: nil, location: kLOCATION, video: nil, audio: nil)
+            }
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            print("Video Library")
         }
         
         // .... set photo
@@ -325,8 +378,8 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         
         //..... set optionMenu
         optionMenu.addAction(takePhotoOrVideo)
-        optionMenu.addAction(shareVideo)
         optionMenu.addAction(sharePhoto)
+        optionMenu.addAction(shareVideo)
         optionMenu.addAction(shareLocation)
         
         // ..... present the option Menu
@@ -419,7 +472,20 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
             
             
         case kLOCATION:                                         /* By Location */
+            
+            let message = messages[indexPath.row]
+            
+            let mediaItem = message.media as! JSQLocationMediaItem
+            // instantiate our Map
+            let mapView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MapViewController") as! MapViewController
+            mapView.location = mediaItem.location // our jsq_media item for location
+            ///add these to our navigation controller
+            self.navigationController?.pushViewController(mapView, animated: true)
+            
             print("DEBUG: location message type was  tapped")
+            
+            
+            
 
         case kVIDEO:                                           /* By Video */
             print("DEBUG: picture message tapped")
@@ -449,7 +515,29 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         }
     }
     
-    
+    //MARK: >> check if user tapped avatar image
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, at indexPath: IndexPath!) {
+        
+        // present the profile view of F-user object
+        // get the image from fUser object
+        let senderId = messages[indexPath.row].senderId /// returns the unique identifiers for the user who sent the message.
+        var selectedUser: FUser?
+        
+        
+        // if the sender id is same as fUser current id, then the avatar p;icture was taapped
+        if senderId == FUser.currentId() {
+            selectedUser = FUser.currentUser()
+        } else {
+            for user in withUsers {
+                if user.objectId == senderId { /// if the user is selected, it is the user
+                    selectedUser = user
+                }
+            }
+        }
+        /// SHOW user profile
+        presentUserProfile(forUser: selectedUser!)
+        
+    }
     
     
     
@@ -585,12 +673,29 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
             return
         }
         
+        //MARK: SEND * LOCATION * message
+        if location != nil {
+            print("Send location message")
+            
+            // get lattitudde and longitude
+          let latt: NSNumber = NSNumber(value: appDelegate.coordinates!.latitude)
+          let long: NSNumber = NSNumber(value: appDelegate.coordinates!.longitude)
+           
+            
+            // get the text * the location message *
+            let text = "[\(kLOCATION)]"
+            print("Debuging: \(text)")
+            
+            //  call out instantiated  *OUTGOING* message
+            outgoingMessage = OutgoingMessage(message: text, latitude: latt, longitude: long, senderId: currentUser.objectId, senderName: currentUser.firstname, date: date, status: kDELIVERED, type: kLOCATION)
+            
+        }
         
         
         
         
         
-        
+        //MARK: Makes outgoing message go to FIrebase and send to user in Chat View Controller
         //MARK: JSQ_ system sound player: when user send message the phone will make a "send sound"
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         self.finishSendingMessage()
@@ -605,6 +710,51 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     
     //MARK: Load Messages from FireCLoud
     func loadMessages() {
+        
+        /// To update most * Recent * message status
+        updatedChatListener = reference(.Message).document(FUser.currentId()).collection(chatRoomId).addSnapshotListener({ (snapshot, error) in
+            
+            guard let snapshot = snapshot else {
+                return
+            }
+            
+            /// check if snapshot is empty
+            if !snapshot.isEmpty {
+                // if not empty
+                
+//                 same as writing the  snapshot.documentChanges.forEach( --> below
+//                for diff in snapshot.documentChanges {
+//
+//                }
+                
+                
+                // check if it was *modified* not added or deleted
+                snapshot.documentChanges.forEach( { (diff) in
+                    
+                    
+                    
+                    if diff.type == .modified {
+                        /// means our object was modified
+                        // update local message
+                        self.updateMessage(messageDictionary: diff.document.data() as NSDictionary)
+                    }
+                    
+                    
+                })
+            }
+            
+            
+        })
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         // get last 11 messages, about what we can fit on the view controller. we will have another way to store the previous in the background
         reference(.Message).document(FUser.currentId()).collection(chatRoomId).order(by: kDATE, descending: true).limit(to: 11)
             .getDocuments { (snapshotOfEleven, error) in
@@ -612,9 +762,13 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
                 // check if we get any snapshot back
                 guard let snapshotOfEleven = snapshotOfEleven else {
                     // initial loading is done
-                    print("initial loading of messages is done.")
                     self.initialLoadComplete = true
-                    // listen for new chats
+                    /// listen for new chats
+                    self.listenForNewChats()
+                    print("initial loading of messages is done.")
+
+                    
+                    
                     return
                 }
                 
@@ -635,7 +789,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
                 self.initialLoadComplete = true // have now deleted last 11 messages
                 
                 // MARK: get picture Messags and store in array for pics
-                
+                self.getPictureMessages()
                 
                 
                 
@@ -695,10 +849,10 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
                                 if self.legitTypes.contains(type as! String) {
                                     
                                     
-                                    // This is for picture messages
+                                    /// This is for picture messages
                                     if type as! String == kPICTURE {
                                         //add to pictures
-                                        
+                                        self.addNewPictureMessageLink(link: itemAdded[kPICTURE] as! String)
                                     }
                                     
                                     if self.insertInitialLoadMessages(messageDictionary: itemAdded) {
@@ -721,7 +875,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     
     
     
-    //MARK: Get old messages (Load messages in background)
+    //MARK: Get old messages (Load messages in background) when more than 10
     func getOldMessagesInBackground() {
         //check if any messages
         // check that date is less than 11-days
@@ -742,6 +896,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
                 
                 
                 /// GET the picture messages
+                self.getPictureMessages()
 
                 
                 // exact # of messages to show
@@ -795,6 +950,8 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         
         if (messageDictionary[kSENDERID] as! String) != FUser.currentId() {
             ///update message status if we recieved read message status
+            //updateMessage(messageDictionary: incomingMessage)
+            OutgoingMessage.updateMessage(withId: messageDictionary[kMESSAGEID] as! String, chatRoomId: chatRoomId, memberIds: memberIds) ///updates our chat
         }
         
         
@@ -811,7 +968,23 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     }
     
     
-    
+    //MARK: Update most recent MSG in user's ChatView controller
+    func updateMessage(messageDictionary: NSDictionary) {
+        /// takes our message and updates the message *locally* it is already stored in Firebase
+        
+        for idx in 0 ..< objectMessages.count {
+            /// goes through each message in the array
+            let temp = objectMessages[idx]
+            
+            /// check if it was our message that was update/ or checked
+            if messageDictionary[kMESSAGEID] as! String == temp[kMESSAGEID] as! String {
+                objectMessages[idx] = messageDictionary
+                self.collectionView!.reloadData()
+            }
+        }
+        
+        
+    }
     
     
     
@@ -865,18 +1038,28 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     
     
     
-    
+    //MARK: IBActions for the chat
     
     
     @objc func backAction() {
         //print("Pressed Back")
+        // before we go back we want to clear our "Recent counter"
+        clearRecentCounter(chatRoomId: chatRoomId)
+        removeListeners()
         self.navigationController?.popViewController(animated: true)
     
     }
     
     //MARK: check if info button is pressed
     @objc func infoButtonPressed() {
-        print("Show image messages")
+        
+        // we want to display our collection view by passing our image View links
+        let mediaVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(identifier: "mediaView") as! PicturesCollectionViewController
+        
+        mediaVC.allImageLinks = allPictureMessages
+        
+        self.navigationController?.pushViewController(mediaVC, animated: true)
+        print("DEBUG: Showing all image messages")
     }
     
     @objc func showGroup() {
@@ -886,12 +1069,20 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     @objc func showUserProfile() {
         //get profile view
         let profileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profileView") as! ProfileViewTableViewController
+        
+        
         // get user we are chatting and save as GLOBAL variable for every time we want to show user information
         profileVC.user = withUsers.first! // get first item in array of users
             self.navigationController?.pushViewController(profileVC, animated: true)
     }
     
-    
+    func presentUserProfile(forUser: FUser) {
+        //get profile view
+        let profileVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profileView") as! ProfileViewTableViewController
+        // get user we are chatting and save as GLOBAL variable for every time we want to show user information
+        profileVC.user = forUser
+        self.navigationController?.pushViewController(profileVC, animated: true)
+    }
     
     
     
@@ -905,7 +1096,64 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         }
     }
     
+    //MARK: Typing observer (..... .. . )
     
+    func createTypingObserver() {
+        // every time our user is typing we want to save in firebase "user is typing = true "
+        // when user is typing it will show typing indicator from firevase to user
+        typingListener = reference(.Typing).document(chatRoomId).addSnapshotListener({ (snapshot, error) in
+            guard let snapshot = snapshot else { return }
+            
+            // check if snapshot exists
+            if snapshot.exists {
+                // save the typeing for all the users, whether
+                for data in snapshot.data()! {
+                    // array of key/ value pairs we need to unwrap
+                    if data.key != FUser.currentId() {
+                        let typing = data.value as! Bool
+                        self.showTypingIndicator = typing
+                        if typing {
+                            self.scrollToBottom(animated: true) /// once user starts typing it will automatically scroll the other user to bottom of screen to show them other user is typing
+                        }
+                    }
+                }
+            } else {
+                // firebase has no typing indicator so we make
+                // checiing either user is typing or not & will not crash the program
+                reference(.Typing).document(self.chatRoomId).setData([FUser.currentId() : false])
+            }
+        })
+    }
+    
+    func typingCounterStart() {
+        typingCounter += 1
+        
+        typingCounterSave(isTyping: true)
+        
+        self.perform(#selector(self.typingCounterStop), with: nil, afterDelay: 2.0)
+    }
+   
+//    @objc func typingCounterStop
+    
+    @objc func typingCounterStop() {
+        typingCounter -= 1
+        if typingCounter == 0 {
+            typingCounterSave(isTyping: false)
+        }
+    }
+    
+    func typingCounterSave(isTyping: Bool) {
+        reference(.Typing).document(chatRoomId).updateData([FUser.currentId() : isTyping])
+    }
+    
+    
+    //MARK: UI text view *delegate*
+    // check when someone is texting someing in our textView
+    override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+       
+        typingCounterStart()
+        return true
+    }
 
     
     //MARK: Custom Send Button - update
@@ -989,6 +1237,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         getUsersFromFirestore(withIds: memberIds) { (withUsers) in
             self.withUsers = withUsers
             //get avatars
+            self.getAvatarImages()
             if !self.isGroup! {
                 // then it is one on one chat -> update user info
                 // set online status
@@ -1038,12 +1287,142 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     
     
     
+    //MARK: Get avatar images
+    func getAvatarImages() {
+        
+        // check i fwe can show avatars *if our user want s to see avatar
+        
+        if showAvatars {
+            ///change our default avatar size to cgSize 0 we are going to change it in  viwdidLoad
+            collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSize(width: 30, height: 30)
+            collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSize(width: 30, height: 30)
+
+            // get avatar from current user in avatarImageFrom(fUser: FUSER) {// going to get the avatr
+            avatarImageFrom(fUser: FUser.currentUser()!)  // get current user avatar
+            
+            ///for every user
+            for user in withUsers {
+                avatarImageFrom(fUser: user)
+            }
+            
+            // create jsq avatra function
+        }
+    }
+    
+    
+    func avatarImageFrom(fUser: FUser){
+        if fUser.avatar != "" {
+            // we do have avatar object
+            dataImageFromString(pictureString: fUser.avatar) { (imageData) in
+                
+                if imageData == nil {
+                     return
+                }
+                
+                /// if our avatar dict already; had it
+                if self.avatarImageDictionary != nil {
+                    // update avatar if we have itt
+                    self.avatarImageDictionary!.removeObject(forKey: fUser.objectId) // avatar will be removed from avatar dictionary
+                    self.avatarImageDictionary!.setObject(imageData!, forKey: fUser.objectId as NSCopying) // set a new avatar
+                } else {
+                    // create one
+                    self.avatarImageDictionary = [fUser.objectId : imageData!]
+                }
+                
+                /// create JSQ_avatars from our dictionary...
+                // save to jsq
+                self.createJSQAvatars(avatarDictionary: self.avatarImageDictionary)
+            }
+        }
+    }
+    
+    
+    
+    //MARK: Create a JSQ avatar
+    func createJSQAvatars(avatarDictionary: NSMutableDictionary?) {
+        let defaultAvatr = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "avatarPlaceholder"), diameter: 70)
+        
+        if avatarDictionary != nil {
+            
+            /// go thru all the member ids
+            for userID in memberIds {
+               // check if there is any data
+                if let avatarImageData = avatarDictionary![userID] {
+                    
+                    let jsqAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(data: avatarImageData as! Data), diameter: 70)
+                    
+                    // set the image
+                    self.jsqAvatarDictionary!.setValue(jsqAvatar, forKey: userID)
+                } else {
+                    // default avatar is the default of the current user * initiials
+                    self.jsqAvatarDictionary!.setValue(defaultAvatr, forKey: userID)
+                }
+            }
+            self.collectionView.reloadData() /// reload collection view and show avatar images
+        }
+    }
+    
+    
+    
+    
+    
+    //MARK: Location access
+    
+    /// see if our device currently has access to the users location
+    func haveAccessToUserLocation() -> Bool {
+        // check if app delegate location manager is set
+        if appDelegate.locationManager != nil {
+            // we have a location
+            print("Debug: Has access to user location")
+            /// means we do have location (*user has authenticated it*)
+            return true
+        } else {
+            ProgressHUD.showError("Please give access to location services in settings")
+            print("Please give access to location services in settings")
+            return false
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
     
     //MARK: Helper functions
     
+    //MARK: picture messages
+    func addNewPictureMessageLink(link: String) {
+        allPictureMessages.append(link)
+        
+    }
+    
+    func getPictureMessages() {
+        allPictureMessages = []
+        // go thru all messages in firebase and check if the string is == kPICTURE message
+        for message in loadedMessage {
+            if message[kTYPE] as! String == kPICTURE {
+                allPictureMessages.append(message[kPICTURE] as! String)
+            }
+        }
+    }
+    
+    // end picture messages
+    
+    
+    
+    
+    
+    //MARK: MSG send/ recieved time
     func readTimeFrom(dateString: String) -> String {
         let date = dateFormatter().date(from: dateString)
         
@@ -1086,6 +1465,20 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
             return false
         } else {
             return true // incoming message
+        }
+    }
+    
+    //MARK: removes all listeners with dataBase to attemp to not run as much data processing with this app and firebase
+    func removeListeners() {
+        
+        if typingListener != nil {
+            typingListener!.remove()
+        }
+        if newChatListener != nil {
+            newChatListener!.remove()
+        }
+        if updatedChatListener != nil {
+            updatedChatListener!.remove()
         }
     }
 

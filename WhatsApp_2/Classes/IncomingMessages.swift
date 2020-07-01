@@ -44,6 +44,7 @@ class IncomingMessage {
             print("Create Audio Message")
         case kLOCATION:
             // create Location
+            message = createLocationMessage(messageDictionary: messageDictionary)
             print("create Location")
         default:
             print("unkown message type")
@@ -229,6 +230,47 @@ class IncomingMessage {
         return audioMessage!
     }
 
+    //MARK: Create a shareed-Location Message
+    func createLocationMessage(messageDictionary: NSDictionary) -> JSQMessage {
+        
+        
+        let name = messageDictionary[kSENDERNAME] as? String
+        let userid = messageDictionary[kSENDERID] as? String
+        
+        // make sure correct date/time is given
+        var date: Date! // instantiate a date new date obj
+        
+        if let created = messageDictionary[kDATE] {
+            if (created as! String).count != 14 {
+                date = Date() // date equal new date
+            } else {
+                date = dateFormatter().date(from: created as! String)
+            }
+        } else {
+            date = Date()
+        }
+        
+        
+        //let text = messageDictionary[kMESSAGE] as! String   // where texts are stored in dictionwry
+        let latitude = messageDictionary[kLATITUDE] as? Double
+        let longitude = messageDictionary[kLONGITUDE] as? Double
+        
+        // creaTE JSQ message
+        let mediaItem = JSQLocationMediaItem(location: nil)
+        // once we get our location we want to refresh and show
+        
+        mediaItem?.appliesMediaViewMaskAsOutgoing = returnOutgoingStatusForUser(senderId: userid! )
+        
+        let location = CLLocation(latitude: latitude!, longitude: longitude!)
+        
+        // set the location media item then reload the collection view
+        mediaItem?.setLocation(location, withCompletionHandler: {
+            self.collectionView.reloadData()
+        })
+        
+        //create and return JSQ_message
+        return JSQMessage(senderId: userid, senderDisplayName: name, date: date, media: mediaItem)
+    }
     
     
     

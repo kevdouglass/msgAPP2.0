@@ -139,6 +139,8 @@ func createRecentItems(userId: String, chatRoomId: String, members: [String], wi
     
 }
 
+
+
 //MARK: Restart Chat
 
 func restartRecentChat(recent: NSDictionary) {
@@ -147,7 +149,7 @@ func restartRecentChat(recent: NSDictionary) {
     if recent[kTYPE] as! String == kPRIVATE {
         // our recent was a private Chat
 
-        createRecentChats(members: recent[kMEMBERSTOPUSH] as! [String], chatRoomId: recent[kCHATROOMID] as! String, withUserName: FUser.currentUser()!.firstname as! String, typeOfChat: kPRIVATE, users:  [FUser.currentUser()!], avatarOfGroup: nil)
+        createRecentChats(members: recent[kMEMBERSTOPUSH] as! [String], chatRoomId: recent[kCHATROOMID] as! String, withUserName: FUser.currentUser()!.firstname, typeOfChat: kPRIVATE, users:  [FUser.currentUser()!], avatarOfGroup: nil)
     }
     
     if recent[kTYPE] as! String == kGROUP {
@@ -161,6 +163,51 @@ func restartRecentChat(recent: NSDictionary) {
 }
 
 
+//MARK: Update Recent chats
+
+func updateRecents(chatRoomId: String, lastMessage: String) {
+    /// this is called every time we are sending a message... >> Called in OUTGOINGMESSAGE.Swift
+    
+    reference(.Recent).whereField(kCHATROOMID, isEqualTo: chatRoomId).getDocuments { (snapshot, error) in
+        
+        // check if there is a snapshot
+        guard let snapshot = snapshot else { return }
+        
+        if !snapshot.isEmpty {
+            // we have a "RECENT CHAT" object
+            for recent in snapshot.documents {
+                // fpr every recent item let current
+                let mostRecentMSG = recent.data() as NSDictionary
+                
+                updateRecentItem(recent: mostRecentMSG, lastMessage: lastMessage)
+            }
+        }
+    }
+}
+
+
+
+
+
+
+/// this function will be called from our "Chats" View controller when we are sendinfg message
+func updateRecentItem(recent: NSDictionary, lastMessage: String) {
+    
+    // update the recent msgs date
+    let date = dateFormatter().string(from: Date())
+    
+    var counter = recent[kCOUNTER] as! Int
+    
+    /// update all the "recent" chat item counters, + 1 every time a message is sent and is not read.
+    if recent[kUSERID] as? String != FUser.currentId() {
+        counter += 1
+    }
+    
+    // crete a dictionary of  values we want to update
+    let values = [kLASTMESSAGE : lastMessage, kCOUNTER : counter, kDATE : date] as [String : Any]
+    
+    reference(.Recent).document(recent[kRECENTID] as! String).updateData(values)
+}
 
 
 
@@ -186,5 +233,108 @@ func deleteRecentChat(recentChatDictionary: NSDictionary) {
         
         //MARK: >>    DELETE! < FIreDOcument Item
         reference(.Recent).document(recentID as! String).delete()
+    }
+}
+
+
+//MARK: Clear recent messags >COUNTER>
+
+
+func clearRecentCounterItem(recent: NSDictionary) {
+    reference(.Recent).document(recent[kRECENTID] as! String).updateData([kCOUNTER : 0])
+}
+
+// get chatRoom Id
+func clearRecentCounter(chatRoomId: String) {
+    reference(.Recent).whereField(kCHATROOMID, isEqualTo: chatRoomId).getDocuments { (snapshot, error) in
+        
+        // check if there is a snapshot
+        guard let snapshot = snapshot else { return }
+        
+        if !snapshot.isEmpty {
+            // we have a "RECENT CHAT" object
+            for recent in snapshot.documents {
+                // fpr every recent item let current
+                let currentRecent = recent.data() as NSDictionary
+                
+                if currentRecent[kUSERID] as? String == FUser.currentId() {
+                    /// if it's the correct current user
+                    
+                    clearRecentCounterItem(recent: currentRecent)
+                }
+            }
+        }
+    }
+}
+
+
+func updateExistingRecentWithNewValues(chatRoomId: String, members: [String], withValues: [String : Any]) {
+    reference(.Recent).whereField(kCHATROOMID, isEqualTo: chatRoomId).getDocuments { (snapshot, error) in
+        guard let snapshot = snapshot else { return }
+        
+        if !snapshot.isEmpty {
+            for recent in snapshot.documents {
+                /// browse the recent firebase snapshot document ...
+                ///  read recent as NSDictionary object
+                let recent_ = recent.data() as NSDictionary
+                
+                updateRecent(recentId: recent_[kRECENTID] as! String, withValues: withValues)
+            }
+        }
+    }
+}
+
+func updateRecent(recentId: String, withValues: [String : Any]) {
+    /// update every RECENT in firebase from our chat
+    reference(.Recent).document(recentId).updateData(withValues)
+}
+
+
+
+
+
+
+//MARK: BlockUser
+func blockUser(userToBlock: FUser) {
+    
+    
+    // create chat room ID to block user from the chat
+    // create Unique identifier for when the two users -> when they CHat they will have same ID
+    let userID1 = FUser.currentId()
+    let userID2 = userToBlock.objectId
+    
+    var chatRoomId = ""
+    
+    // generate a chat room ID
+    let value = userID1.compare(userID2).rawValue
+    
+    
+    // no matter which user selects chat, their chat ID will be the same
+    if value < 0 {
+        chatRoomId = userID1 + userID2
+    }
+    else {
+        chatRoomId = userID2 + userID1
+    }
+    
+    // get all the RECENTS from the chatRoomId so we can delete them
+    getRecents(forChatRoomId: chatRoomId)
+}
+
+/// get all the RECENTS from the chatRoomId so we can delete them
+func getRecents(forChatRoomId: String) {
+    
+    reference(.Recent).whereField(kCHATROOMID, isEqualTo: forChatRoomId).getDocuments { (snapshot, error) in
+        
+        guard let snapshot = snapshot else { return }
+        
+        if !snapshot.isEmpty {
+            for recent in snapshot.documents {
+                
+                let recents = recent.data() as NSDictionary
+                
+                deleteRecentChat(recentChatDictionary: recents)
+            }
+        }
     }
 }

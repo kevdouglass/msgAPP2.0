@@ -20,6 +20,9 @@
 		0A52116D247F833200917F2F /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A52116C247F833200917F2F /* WelcomeViewController.swift */; };
 		0A52116F24805DD600917F2F /* FinishRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A52116E24805DD600917F2F /* FinishRegistrationViewController.swift */; };
 		0C1A893324A3256900049C5D /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A893224A3256900049C5D /* AudioViewController.swift */; };
+		0C1A893524A4208200049C5D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A893424A4208200049C5D /* MapViewController.swift */; };
+		0C1A893724ABEC0200049C5D /* PicturesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A893624ABEC0200049C5D /* PicturesCollectionViewController.swift */; };
+		0C1A893924ABECB000049C5D /* pictureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A893824ABECB000049C5D /* pictureCollectionViewCell.swift */; };
 		0C2BCF7E248DF78E00032635 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2BCF7D248DF78E00032635 /* SettingsTableViewController.swift */; };
 		0C2BCF80248E152E00032635 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2BCF7F248E152E00032635 /* UserTableViewCell.swift */; };
 		0C2BCF83248E22F700032635 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2BCF82248E22F700032635 /* UsersTableViewController.swift */; };
@@ -53,6 +56,9 @@
 		0A52116C247F833200917F2F /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		0A52116E24805DD600917F2F /* FinishRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishRegistrationViewController.swift; sourceTree = "<group>"; };
 		0C1A893224A3256900049C5D /* AudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioViewController.swift; sourceTree = "<group>"; };
+		0C1A893424A4208200049C5D /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		0C1A893624ABEC0200049C5D /* PicturesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturesCollectionViewController.swift; sourceTree = "<group>"; };
+		0C1A893824ABECB000049C5D /* pictureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pictureCollectionViewCell.swift; sourceTree = "<group>"; };
 		0C2BCF7D248DF78E00032635 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		0C2BCF7F248E152E00032635 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		0C2BCF82248E22F700032635 /* UsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +159,7 @@
 			children = (
 				0C2BCF7F248E152E00032635 /* UserTableViewCell.swift */,
 				0C44EB7B2492B251006FFD40 /* RecentChatsTableViewCell.swift */,
+				0C1A893824ABECB000049C5D /* pictureCollectionViewCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -181,6 +188,8 @@
 				0C2BCF82248E22F700032635 /* UsersTableViewController.swift */,
 				0C44EB7D24960689006FFD40 /* ChatViewController.swift */,
 				0C2BCF862490CE5200032635 /* ProfileViewTableViewController.swift */,
+				0C1A893424A4208200049C5D /* MapViewController.swift */,
+				0C1A893624ABEC0200049C5D /* PicturesCollectionViewController.swift */,
 			);
 			path = SecondaryViews;
 			sourceTree = "<group>";
@@ -325,14 +334,17 @@
 				0C44EB8424996ED5006FFD40 /* Camara.swift in Sources */,
 				0A52114F247EE7D500917F2F /* AppDelegate.swift in Sources */,
 				0C44EB802497090D006FFD40 /* OutgoingMessages.swift in Sources */,
+				0C1A893524A4208200049C5D /* MapViewController.swift in Sources */,
 				0C2BCF80248E152E00032635 /* UserTableViewCell.swift in Sources */,
 				0C2BCF83248E22F700032635 /* UsersTableViewController.swift in Sources */,
 				0A521151247EE7D500917F2F /* SceneDelegate.swift in Sources */,
+				0C1A893724ABEC0200049C5D /* PicturesCollectionViewController.swift in Sources */,
 				0C44EB86249AA5A3006FFD40 /* Downloader.swift in Sources */,
 				0A52116F24805DD600917F2F /* FinishRegistrationViewController.swift in Sources */,
 				0C44EB88249AC829006FFD40 /* PhotoMediaItem.swift in Sources */,
 				0A521165247EEA0900917F2F /* F_User.swift in Sources */,
 				0C44EB7C2492B251006FFD40 /* RecentChatsTableViewCell.swift in Sources */,
+				0C1A893924ABECB000049C5D /* pictureCollectionViewCell.swift in Sources */,
 				0A521169247EEEB000917F2F /* CollectionReference.swift in Sources */,
 				0C4704C22491DE03004895D8 /* Recent.swift in Sources */,
 				0C2BCF85248EF12500032635 /* ChatsViewController.swift in Sources */,
@@ -486,6 +498,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V34DW6N2KB;
 				INFOPLIST_FILE = WhatsApp_2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -504,6 +517,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V34DW6N2KB;
 				INFOPLIST_FILE = WhatsApp_2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

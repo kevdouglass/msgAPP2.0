@@ -128,7 +128,12 @@ func timeElapsed(date: Date) -> String {
 
 
 
-
+//MARK: for avatars
+func dataImageFromString(pictureString: String, withBlock: (_ image: Data?) -> Void) {
+    let imageData = NSData(base64Encoded: pictureString, options: NSData.Base64DecodingOptions(rawValue: 0))
+    
+    withBlock(imageData as? Data)
+}
 
 
 

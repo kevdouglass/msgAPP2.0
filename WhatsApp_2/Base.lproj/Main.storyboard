@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -748,6 +749,84 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mbV-mO-0ot" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6359" y="1021"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="NPi-S0-pQ8">
+            <objects>
+                <viewController storyboardIdentifier="MapViewController" id="8lY-R3-3JR" customClass="MapViewController" customModule="WhatsApp_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Zqa-f7-aX4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0fT-EQ-05Y">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="0fT-EQ-05Y" firstAttribute="bottom" secondItem="ATe-Bb-7RQ" secondAttribute="bottom" id="36h-bh-Fb2"/>
+                            <constraint firstItem="0fT-EQ-05Y" firstAttribute="top" secondItem="ATe-Bb-7RQ" secondAttribute="top" id="Rvo-vG-PEc"/>
+                            <constraint firstItem="ATe-Bb-7RQ" firstAttribute="trailing" secondItem="0fT-EQ-05Y" secondAttribute="trailing" id="SMl-jy-Piz"/>
+                            <constraint firstItem="0fT-EQ-05Y" firstAttribute="leading" secondItem="ATe-Bb-7RQ" secondAttribute="leading" id="w8I-8p-waO"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ATe-Bb-7RQ"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="0fT-EQ-05Y" id="Yfo-sy-WtU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yl9-gf-RDT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7156.521739130435" y="1020.5357142857142"/>
+        </scene>
+        <!--Pictures Collection View Controller-->
+        <scene sceneID="p92-NY-L6L">
+            <objects>
+                <collectionViewController storyboardIdentifier="mediaView" id="hYc-9W-Mir" customClass="PicturesCollectionViewController" customModule="WhatsApp_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Frz-c2-oUt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fKP-el-UVF">
+                            <size key="itemSize" width="105" height="105"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="10" minY="10" maxX="25" maxY="10"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="sww-pT-uee" customClass="pictureCollectionViewCell" customModule="WhatsApp_2" customModuleProvider="target">
+                                <rect key="frame" x="10" y="10" width="105" height="105"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bjw-Ar-x1X">
+                                    <rect key="frame" x="0.0" y="0.0" width="105" height="105"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="58r-6m-bpZ">
+                                            <rect key="frame" x="0.0" y="-2.5" width="105" height="110"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="58r-6m-bpZ" firstAttribute="height" secondItem="bjw-Ar-x1X" secondAttribute="height" multiplier="0.898734" constant="16" id="3ch-WW-f2T"/>
+                                        <constraint firstItem="58r-6m-bpZ" firstAttribute="width" secondItem="bjw-Ar-x1X" secondAttribute="width" id="5u5-93-JVM"/>
+                                        <constraint firstItem="58r-6m-bpZ" firstAttribute="centerX" secondItem="bjw-Ar-x1X" secondAttribute="centerX" id="HnO-Tg-K9e"/>
+                                        <constraint firstItem="58r-6m-bpZ" firstAttribute="centerY" secondItem="bjw-Ar-x1X" secondAttribute="centerY" id="wiV-En-yMq"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="105" height="105"/>
+                                <connections>
+                                    <outlet property="imageView" destination="58r-6m-bpZ" id="5nH-Jq-sh9"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="hYc-9W-Mir" id="96c-rq-xUu"/>
+                            <outlet property="delegate" destination="hYc-9W-Mir" id="zCL-2z-ZxC"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xzv-hB-q3C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7156.521739130435" y="1692.8571428571429"/>
         </scene>
         <!--Settings-->
         <scene sceneID="TU0-5R-ZRv">
