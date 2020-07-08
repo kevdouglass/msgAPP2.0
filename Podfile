@@ -25,6 +25,8 @@ target 'WhatsApp_2' do
 	# used for recording AUDIO messages
 	pod 'IQAudioRecorderController'
 
+	#import Contacts from iPhone
+	pod 'libPhoneNumber-iOS', '~> 0.8'
 
 
 	# for messenger 7.3.3 is the "stable version"

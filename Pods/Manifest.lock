@@ -355,6 +355,7 @@ PODS:
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
   - leveldb-library (1.22)
+  - libPhoneNumber-iOS (0.9.15)
   - MBProgressHUD (1.2.0)
   - nanopb (1.30905.0):
     - nanopb/decode (= 1.30905.0)
@@ -379,6 +380,7 @@ DEPENDENCIES:
   - ImagePicker
   - IQAudioRecorderController
   - JSQMessagesViewController (= 7.3.3)
+  - libPhoneNumber-iOS (~> 0.8)
   - MBProgressHUD
   - ProgressHUD
 
@@ -411,6 +413,7 @@ SPEC REPOS:
     - JSQMessagesViewController
     - JSQSystemSoundPlayer
     - leveldb-library
+    - libPhoneNumber-iOS
     - MBProgressHUD
     - nanopb
     - pop
@@ -447,6 +450,7 @@ SPEC CHECKSUMS:
   JSQMessagesViewController: 0ee3f80237268192a3e8337fd0d787f1a1bf5a7a
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
+  libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
@@ -455,6 +459,6 @@ SPEC CHECKSUMS:
   SCSiriWaveformView: 15b9dd6f94c7536e2032b34a35c6ff74d38c7411
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
 
-PODFILE CHECKSUM: 9a7dc7bec23e7f83f807352f78773fc1644b5b70
+PODFILE CHECKSUM: a60a04ec8cf32a7d003acbd65b2ee1b549df15c0
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

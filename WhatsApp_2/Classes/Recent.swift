@@ -153,13 +153,11 @@ func restartRecentChat(recent: NSDictionary) {
     }
     
     if recent[kTYPE] as! String == kGROUP {
-        
+        //print(".... \(recent)")
         createRecentChats(members: recent[kMEMBERSTOPUSH] as! [String], chatRoomId: recent[kCHATROOMID]
-            as! String, withUserName: recent[kWITHUSERUSERNAME] as! String, typeOfChat: kGROUP, users: nil, avatarOfGroup: recent[kAVATAR] as? String)
-        
+            as! String, withUserName: recent[kWITHUSERFULLNAME] as! String, typeOfChat: kGROUP, users: nil, avatarOfGroup: recent[kAVATAR] as? String)
+
     }
-    
-    
 }
 
 
@@ -266,6 +264,34 @@ func clearRecentCounter(chatRoomId: String) {
         }
     }
 }
+
+//MARK: "Group" chats *Most Recent MSG*
+
+func startGroupChat(group: Group) {
+    
+    let chatRoomId = group.groupDictionary[kGROUPID] as! String
+    let members = group.groupDictionary[kMEMBERS] as! [String]
+    
+    //createRecent(members: [String], chatRoomId: String, withUserName: String, type: String, users: [FUser]?,
+    createRecentChats(members: members, chatRoomId: chatRoomId, withUserName: group.groupDictionary[kNAME] as! String, typeOfChat: kGROUP, users: nil, avatarOfGroup: (group.groupDictionary[kAVATAR] as? String))
+    
+}
+
+
+func createRecentForNewGroupMembers(groupId: String, groupName: String, membersToPush: [String], avatar: String) {
+    
+    /// if one member invites another user ..
+    // goes into createRecentChats function and sees if therere is already a "Recent" message for group
+    createRecentChats(members: membersToPush, chatRoomId: groupId, withUserName: groupName, typeOfChat: kGROUP, users: nil, avatarOfGroup: avatar)
+    
+}
+
+
+
+
+
+
+
 
 
 func updateExistingRecentWithNewValues(chatRoomId: String, members: [String], withValues: [String : Any]) {

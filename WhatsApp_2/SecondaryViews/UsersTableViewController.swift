@@ -303,7 +303,13 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating, 
                 sectionTitle = firstCharString
                 self.allUsersGrouped[sectionTitle] = []
                 
-                self.sectionTitleList.append(sectionTitle)
+                
+                /// will split data into sections based on user first letter of first name. will only show the letter 1x now
+                //self.sectionTitleList.append(sectionTitle)
+                if !sectionTitleList.contains(sectionTitle) {
+                    
+                    self.sectionTitleList.append(sectionTitle)
+                }
             }
             // apend the user first letter to array
             self.allUsersGrouped[firstCharString]?.append(currentUser)

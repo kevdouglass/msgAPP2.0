@@ -127,10 +127,27 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         
         /// Create typing observer to show other user when a user is *typing* ...
         createTypingObserver()
+        
+        // load user defaults
+        loadUserDefaults()
+        
+        /// Add menu option for JSQ messages cell
+        /// When user clicks on each message (picture, text, locatoin or video it will now show a prompt to "delete" that message
+        JSQMessagesCollectionViewCell.registerMenuAction(#selector(delete))
+        
+        
         navigationItem.largeTitleDisplayMode = .never
         
         // create a BUTTON
         self.navigationItem.leftBarButtonItems = [UIBarButtonItem(image: UIImage(named: "Back"), style: .plain, target: self, action: #selector(self.backAction))]
+        
+        
+        // check if our chat is a "GROUP" chat
+        if isGroup! {
+            getCurrentGroup(withId: chatRoomId) // grabs our group and sets up our user interface
+        }
+        
+        
         
         
         collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
@@ -540,8 +557,50 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     }
     
     
+    //MARK: > MULTIMEDIA < Mesages
+    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        
+        // check if our app should show a MENU option
+        //super.collectionView(collectionView, shouldShowMenuForItemAt: indexPath))
+        super.collectionView(collectionView, shouldShowMenuForItemAt: indexPath)
+        return true
+    }
     
+    /// function helps message that is to be copied so it does not repeat when "copied" is pressed
+    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        
+        /// shows options for text messages -> "delete" & "copy" -> check whether it is a media or text message
+        if messages[indexPath.row].isMediaMessage { // get the specific message that was pushed by user
+            if action.description == "delete:" {    // will show "delete" for MEDIA messages
+                return true
+            } else {
+                return false
+            }
+        }
+        else {         // else it is a text message
+            if action.description == "delete:" || action.description == "copy:" {  /// will show  "copy and delete" for TEXT msg
+                return true
+            } else {
+                return true
+            }
+        }
+    }
     
+    //MARK: Delete message
+    /// function to be called every time the user deletes a message, deletes from collectionView and from our FireBase!!
+    // remove from collectoin View and FIrebase
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didDeleteMessageAt indexPath: IndexPath!) {
+        let messageId = objectMessages[indexPath.row][kMESSAGEID] as! String    // get object message of our currently Tapped msg and get the message ID from the object emssages DICTIONAREY, then return it as a String
+        // delete message from object message
+        objectMessages.remove(at: indexPath.row)
+        // have 2 arrays that are synced
+        // also deleting from messages
+        messages.remove(at: indexPath.row)
+        
+        /// delete message from *Firebase
+        // write from ougoing messages function
+        OutgoingMessage.deleteMessage(withId: messageId, chatRoomId: chatRoomId)
+    }
     
     
     
@@ -1051,6 +1110,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     }
     
     //MARK: check if info button is pressed
+    
     @objc func infoButtonPressed() {
         
         // we want to display our collection view by passing our image View links
@@ -1062,9 +1122,21 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         print("DEBUG: Showing all image messages")
     }
     
+    
+    
+    
     @objc func showGroup() {
-        print("Show Group")
+        /// inititialize/ present our "Group" view controller
+        let groupVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(identifier: "groupView") as! GroupViewController
+        
+        // set our group"
+        groupVC.group = group!
+        self.navigationController?.pushViewController(groupVC, animated: true)
+        print("Show Group View Controller")
     }
+    
+    
+    
     
     @objc func showUserProfile() {
         //get profile view
@@ -1248,6 +1320,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     }
     
     
+    //MARK: setup UI for single chat
     func setUIForSingleChat() {
         let withUser = withUsers.first!
         
@@ -1267,6 +1340,26 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         }
         avatarButton.addTarget(self, action: #selector(self.showUserProfile), for: .touchUpInside)
     }
+    
+    
+    //MARK: Setup UI for *Group chats*
+    func setUIForGroupChat() {
+        //get the avatar of your group
+        imageFromData(pictureData: (group![kAVATAR] as! String)) { (image) in
+                
+            if image != nil {
+                // set image to avatar image
+                avatarButton.setImage(image!.circleMasked, for: .normal)
+            }
+        }
+        // set the title
+        titleLabel.text = titleName
+        subTitleLabel.text = ""
+        
+    }
+    
+    
+    
     
     
     //MARK: UIImagePicker Controller delegate
@@ -1400,6 +1493,46 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     
     //MARK: Helper functions
     
+    /// saves our standard user defaults
+    func loadUserDefaults() {
+        // check first load
+        firstLoad = userDefaults.bool(forKey: kFIRSTRUN)
+        
+        if !firstLoad! {
+            userDefaults.set(true, forKey: kFIRSTRUN)   /// our first run has happened already
+            userDefaults.set(showAvatars, forKey: kSHOWAVATAR)
+            
+            userDefaults.synchronize()
+        }
+        
+        showAvatars = userDefaults.bool(forKey: kSHOWAVATAR) /// incase we dont have the key, we show << here >>
+        // check for background image
+        checkForBackgroundImage()
+        
+    }
+    
+    /// cehck if we have any images saved for our image defaults for our background
+    func checkForBackgroundImage() {
+        if userDefaults.object(forKey: kBACKGROUBNDIMAGE) != nil {
+            // we have a background image
+            self.collectionView.backgroundColor = .clear
+            
+            // create imageView the size of our screen
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+            imageView.image = UIImage(named: userDefaults.object(forKey: kBACKGROUBNDIMAGE) as! String)!
+            
+            /// set aspect ratio for background view of image so it fits various sizes of iPhone
+            imageView.contentMode = .center     // will zoom in on images but fill the screen on iPHONE 10
+                    /* OR */
+            //imageView.contentMode = .scaleAspectFill    // TODO get bigger images so it fits BIGGEST iphone images
+            
+            self.view.insertSubview(imageView, at: 0)   // first view in our subview heirarchy
+        }
+    }
+    
+    
+    
+    
     //MARK: picture messages
     func addNewPictureMessageLink(link: String) {
         allPictureMessages.append(link)
@@ -1482,4 +1615,23 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         }
     }
 
+    
+    
+    
+    /// get our current group
+    // we have our groupID (same as chatRoom Id), grab the ID to get the group name
+    func getCurrentGroup(withId: String) {
+        // access FireBase reference
+        reference(.Group).document(withId).getDocument { (snapshot, error) in
+            
+            guard let snapshot = snapshot else { return }
+            
+            // if snapshot exists
+            if snapshot.exists {
+              ///  set group dictionary to the snapshot.data dictionary
+                self.group = snapshot.data() as! NSDictionary
+                self.setUIForGroupChat()
+            }
+        }
+    }
 }

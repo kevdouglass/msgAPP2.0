@@ -148,8 +148,10 @@ class OutgoingMessage {
         // (3) send push Notificatiom
     }
 
+    
+    //MARK: Delete Message: will delete reference from firebase document as well
     class func deleteMessage(withId: String, chatRoomId: String) {
-        
+        reference(.Message).document(FUser.currentId()).collection(chatRoomId).document(withId).delete()
     }
     
     // update our message memberId because we want all the members to know *update* happened

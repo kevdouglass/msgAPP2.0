@@ -75,13 +75,20 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         // display table view
         // must access story board
+/*
         let userVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(identifier: "usersTableView") as! UsersTableViewController
         
         self.navigationController?.pushViewController(userVC, animated: true)
-        
+        */
+        selectUserForChat(isGroup: false)
         
     }
     
+    
+    @objc func groupButtonPressed() {
+        selectUserForChat(isGroup: true)
+        print("DEBUG: Hello, Group button was pressed")
+    }
     
     
     
@@ -135,10 +142,7 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
     
-    
-        
         //Create mute and Delete buttons
         var tempRecent: NSDictionary!
         
@@ -306,10 +310,6 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
 
-    @objc func groupButtonPressed() {
-        print("DEBUG: Group button was pressed")
-    }
-    
     
     //MARK: RecentChatCell Delegate:
     //want our avatarTap to display the profileView
@@ -406,5 +406,16 @@ class ChatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         updateExistingRecentWithNewValues(chatRoomId: recent[kCHATROOMID] as! String, members: recent[kMEMBERS] as! [String], withValues: [kMEMBERSTOPUSH : membersToPush])
     }
     
+    func selectUserForChat(isGroup: Bool) {
+        
+//
+//        let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(identifier: "contactsView") as! ContactsTableViewController
+        let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(identifier: "contactsView") as! ContactsTableViewController
+        
+        contactsVC.isGroup = isGroup
+        
+        
+        self.navigationController?.pushViewController(contactsVC, animated: true)
+    }
     
 }

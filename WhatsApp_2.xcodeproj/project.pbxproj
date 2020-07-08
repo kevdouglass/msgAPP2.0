@@ -37,6 +37,13 @@
 		0C44EB88249AC829006FFD40 /* PhotoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB87249AC829006FFD40 /* PhotoMediaItem.swift */; };
 		0C44EB8A24A2CDBB006FFD40 /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB8924A2CDBB006FFD40 /* VideoMessage.swift */; };
 		0C4704C22491DE03004895D8 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4704C12491DE03004895D8 /* Recent.swift */; };
+		0CE5447624B2F9AD00EF1980 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447524B2F9AD00EF1980 /* ContactsTableViewController.swift */; };
+		0CE5447824B303B000EF1980 /* CountryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447724B303B000EF1980 /* CountryCode.swift */; };
+		0CE5447A24B3C7F900EF1980 /* GroupMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447924B3C7F900EF1980 /* GroupMemberCollectionViewCell.swift */; };
+		0CE5447C24B3CB7000EF1980 /* NewGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447B24B3CB7000EF1980 /* NewGroupViewController.swift */; };
+		0CE5447E24B3F1B600EF1980 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447D24B3F1B600EF1980 /* Group.swift */; };
+		0CE5448024B427A400EF1980 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447F24B427A400EF1980 /* GroupViewController.swift */; };
+		0CE5448224B534D300EF1980 /* InviteUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5448124B534D300EF1980 /* InviteUsersTableViewController.swift */; };
 		F7DEDB7FAEAB38CCB2601FD7 /* Pods_WhatsApp_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +80,13 @@
 		0C44EB87249AC829006FFD40 /* PhotoMediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMediaItem.swift; sourceTree = "<group>"; };
 		0C44EB8924A2CDBB006FFD40 /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
 		0C4704C12491DE03004895D8 /* Recent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
+		0CE5447524B2F9AD00EF1980 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
+		0CE5447724B303B000EF1980 /* CountryCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCode.swift; sourceTree = "<group>"; };
+		0CE5447924B3C7F900EF1980 /* GroupMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberCollectionViewCell.swift; sourceTree = "<group>"; };
+		0CE5447B24B3CB7000EF1980 /* NewGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupViewController.swift; sourceTree = "<group>"; };
+		0CE5447D24B3F1B600EF1980 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		0CE5447F24B427A400EF1980 /* GroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
+		0CE5448124B534D300EF1980 /* InviteUsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteUsersTableViewController.swift; sourceTree = "<group>"; };
 		0D0FE9371432D843848119D4 /* Pods-WhatsApp_2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsApp_2.release.xcconfig"; path = "Target Support Files/Pods-WhatsApp_2/Pods-WhatsApp_2.release.xcconfig"; sourceTree = "<group>"; };
 		2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhatsApp_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92D1278F93BE82DA59694EA4 /* Pods-WhatsApp_2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsApp_2.debug.xcconfig"; path = "Target Support Files/Pods-WhatsApp_2/Pods-WhatsApp_2.debug.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +132,7 @@
 				0A521159247EE7D700917F2F /* LaunchScreen.storyboard */,
 				0A52115C247EE7D700917F2F /* Info.plist */,
 				0A521162247EE8A000917F2F /* GoogleService-Info.plist */,
+				0CE5447424B2F8B000EF1980 /* Settings */,
 				0C4704BF2491D0B9004895D8 /* MainViews */,
 				0C4704C02491D12F004895D8 /* SecondaryViews */,
 				0C2BCF81248E22A600032635 /* CustomCells */,
@@ -150,6 +165,8 @@
 				0C44EB87249AC829006FFD40 /* PhotoMediaItem.swift */,
 				0C44EB8924A2CDBB006FFD40 /* VideoMessage.swift */,
 				0C1A893224A3256900049C5D /* AudioViewController.swift */,
+				0CE5447724B303B000EF1980 /* CountryCode.swift */,
+				0CE5447D24B3F1B600EF1980 /* Group.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -160,6 +177,7 @@
 				0C2BCF7F248E152E00032635 /* UserTableViewCell.swift */,
 				0C44EB7B2492B251006FFD40 /* RecentChatsTableViewCell.swift */,
 				0C1A893824ABECB000049C5D /* pictureCollectionViewCell.swift */,
+				0CE5447924B3C7F900EF1980 /* GroupMemberCollectionViewCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -190,8 +208,19 @@
 				0C2BCF862490CE5200032635 /* ProfileViewTableViewController.swift */,
 				0C1A893424A4208200049C5D /* MapViewController.swift */,
 				0C1A893624ABEC0200049C5D /* PicturesCollectionViewController.swift */,
+				0CE5447524B2F9AD00EF1980 /* ContactsTableViewController.swift */,
+				0CE5447B24B3CB7000EF1980 /* NewGroupViewController.swift */,
+				0CE5447F24B427A400EF1980 /* GroupViewController.swift */,
+				0CE5448124B534D300EF1980 /* InviteUsersTableViewController.swift */,
 			);
 			path = SecondaryViews;
+			sourceTree = "<group>";
+		};
+		0CE5447424B2F8B000EF1980 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		9F1093AFCD693A4284DDBEFA /* Pods */ = {
@@ -327,10 +356,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CE5448024B427A400EF1980 /* GroupViewController.swift in Sources */,
 				0A52116B247EF14700917F2F /* HelperFunctions.swift in Sources */,
 				0A52116D247F833200917F2F /* WelcomeViewController.swift in Sources */,
 				0C44EB7E24960689006FFD40 /* ChatViewController.swift in Sources */,
 				0A521167247EEA8600917F2F /* Constants.swift in Sources */,
+				0CE5448224B534D300EF1980 /* InviteUsersTableViewController.swift in Sources */,
 				0C44EB8424996ED5006FFD40 /* Camara.swift in Sources */,
 				0A52114F247EE7D500917F2F /* AppDelegate.swift in Sources */,
 				0C44EB802497090D006FFD40 /* OutgoingMessages.swift in Sources */,
@@ -340,17 +371,22 @@
 				0A521151247EE7D500917F2F /* SceneDelegate.swift in Sources */,
 				0C1A893724ABEC0200049C5D /* PicturesCollectionViewController.swift in Sources */,
 				0C44EB86249AA5A3006FFD40 /* Downloader.swift in Sources */,
+				0CE5447A24B3C7F900EF1980 /* GroupMemberCollectionViewCell.swift in Sources */,
 				0A52116F24805DD600917F2F /* FinishRegistrationViewController.swift in Sources */,
 				0C44EB88249AC829006FFD40 /* PhotoMediaItem.swift in Sources */,
+				0CE5447824B303B000EF1980 /* CountryCode.swift in Sources */,
 				0A521165247EEA0900917F2F /* F_User.swift in Sources */,
 				0C44EB7C2492B251006FFD40 /* RecentChatsTableViewCell.swift in Sources */,
+				0CE5447624B2F9AD00EF1980 /* ContactsTableViewController.swift in Sources */,
 				0C1A893924ABECB000049C5D /* pictureCollectionViewCell.swift in Sources */,
 				0A521169247EEEB000917F2F /* CollectionReference.swift in Sources */,
 				0C4704C22491DE03004895D8 /* Recent.swift in Sources */,
 				0C2BCF85248EF12500032635 /* ChatsViewController.swift in Sources */,
 				0C1A893324A3256900049C5D /* AudioViewController.swift in Sources */,
+				0CE5447C24B3CB7000EF1980 /* NewGroupViewController.swift in Sources */,
 				0C2BCF872490CE5200032635 /* ProfileViewTableViewController.swift in Sources */,
 				0C2BCF7E248DF78E00032635 /* SettingsTableViewController.swift in Sources */,
+				0CE5447E24B3F1B600EF1980 /* Group.swift in Sources */,
 				0C44EB8224973811006FFD40 /* IncomingMessages.swift in Sources */,
 				0C44EB8A24A2CDBB006FFD40 /* VideoMessage.swift in Sources */,
 			);
