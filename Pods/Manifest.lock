@@ -365,6 +365,7 @@ PODS:
   - pop (1.0.12)
   - ProgressHUD (2.70)
   - PromisesObjC (1.2.8)
+  - RNCryptor (5.1.0)
   - SCSiriWaveformView (1.1.1)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
@@ -383,6 +384,7 @@ DEPENDENCIES:
   - libPhoneNumber-iOS (~> 0.8)
   - MBProgressHUD
   - ProgressHUD
+  - RNCryptor
 
 SPEC REPOS:
   trunk:
@@ -419,6 +421,7 @@ SPEC REPOS:
     - pop
     - ProgressHUD
     - PromisesObjC
+    - RNCryptor
     - SCSiriWaveformView
     - SDWebImage
 
@@ -456,9 +459,10 @@ SPEC CHECKSUMS:
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   ProgressHUD: e603e8b8622c47d8818b9fb38b3cfe9d3e7ca421
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SCSiriWaveformView: 15b9dd6f94c7536e2032b34a35c6ff74d38c7411
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
 
-PODFILE CHECKSUM: a60a04ec8cf32a7d003acbd65b2ee1b549df15c0
+PODFILE CHECKSUM: 1ef4cda8e32a5a9fae1c145a7b66196b687474cc
 
 COCOAPODS: 1.9.3

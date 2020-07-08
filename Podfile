@@ -36,7 +36,9 @@ target 'WhatsApp_2' do
 	pod 'IDMPhotoBrowser'
 	#  for nice images/ icons
 	pod 'ImagePicker'
-
+	
+	# for Encryption/ Decryption of Data
+	pod 'RNCryptor'
 
 
   # Pods for WhatsApp_2
