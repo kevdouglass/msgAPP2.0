@@ -66,7 +66,7 @@ class IncomingMessage {
     
     
     
-    //MARK: Create Message types
+    //MARK: Create Message types for JSQMessage [ Decrypted ]
     func createTextMessage(messageDictionary: NSDictionary, chatRoomId: String) -> JSQMessage {
         let name = messageDictionary[kSENDERNAME] as? String
         let userid = messageDictionary[kSENDERID] as? String
@@ -84,10 +84,13 @@ class IncomingMessage {
             date = Date()
         }
         
-
-        let text = messageDictionary[kMESSAGE] as! String   // where texts are stored in dictionwry
+        /// non decrypted text
+        //let text = messageDictionary[kMESSAGE] as! String   // where texts are stored in dictionwry
+        
+        /// DECRYPT text
+        let decryptedText = Encryption.decryptText(chatRoomID: chatRoomId, encryptedMessage: messageDictionary[kMESSAGE] as! String)
         //create and return JSQ_message
-        return JSQMessage(senderId: userid, senderDisplayName: name, date: date, text: text)
+        return JSQMessage(senderId: userid, senderDisplayName: name, date: date, text: decryptedText)
     }
     
     

@@ -40,20 +40,29 @@ class RecentChatsTableViewCell: UITableViewCell {
         avatarImageView.addGestureRecognizer(tapGesture)
     }
 
+    
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
     }
     
+    
+    
+    
     //MARK: Generate Cell
     func generateCell(recentChat: NSDictionary, indexPath: IndexPath) {
-        
-        
         self.indexPath = indexPath
        
         
         self.nameLabel.text = recentChat[kWITHUSERFULLNAME] as? String //optional -> incase no value, will not run
-        self.lastMessageLabel.text = recentChat[kLASTMESSAGE] as? String
+        
+        /// decrypt text
+        let decryptedText = Encryption.decryptText(chatRoomID: recentChat[kCHATROOMID] as! String, encryptedMessage: recentChat[kLASTMESSAGE] as! String)
+        
+        
+        /*self.lastMessageLabel.text = recentChat[kLASTMESSAGE] as? String */     /// without encryption
+        self.lastMessageLabel.text = decryptedText                                 /// with encryption
         self.messageCounterLabel.text = recentChat[kCOUNTER] as? String
         
         // check if there is an Avatar
@@ -71,6 +80,7 @@ class RecentChatsTableViewCell: UITableViewCell {
             self.messageCounterLabel.text = "\(recentChat[kCOUNTER] as! Int)"
             self.messageCounterBackground.isHidden = false
             self.messageCounterLabel.isHidden = false
+            //TODO self.messageCounterLabel * set to circle MASKED!!!
         } else {
             // counter is 0, so hide the counter
             self.messageCounterBackground.isHidden = true
