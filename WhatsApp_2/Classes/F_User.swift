@@ -472,9 +472,11 @@ func updateOneSignalId() {
 }
 
 
+/// set oneSignal iD in FIrestore
 func setOneSignalId(pushId: String) {
     updateCurrentUserOneSignalId(newId: pushId)
 }
+
 
 
 func removeOneSignalId() {
@@ -492,7 +494,7 @@ func updateCurrentUserOneSignalId(newId: String) {
     }
 }
 
-//MARK: Chaeck User block status
+//MARK: Check User block status
 
 func checkBlockedStatus(withUser: FUser) -> Bool {
     return withUser.blockedUsers.contains(FUser.currentId())    /// check if our *blocked usders*

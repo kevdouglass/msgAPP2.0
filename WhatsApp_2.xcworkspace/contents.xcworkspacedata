@@ -2,9 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:WhatsApp_2.xcodeproj">
+      location = "group:/Users/kevind/Desktop/msgAPP2.0/WhatsApp_2.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:WhatsApp_2.xcodeproj">
    </FileRef>
 </Workspace>

@@ -362,6 +362,7 @@ PODS:
     - nanopb/encode (= 1.30905.0)
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
+  - OneSignal (2.14.3)
   - pop (1.0.12)
   - ProgressHUD (2.70)
   - PromisesObjC (1.2.8)
@@ -383,6 +384,7 @@ DEPENDENCIES:
   - JSQMessagesViewController (= 7.3.3)
   - libPhoneNumber-iOS (~> 0.8)
   - MBProgressHUD
+  - OneSignal
   - ProgressHUD
   - RNCryptor
 
@@ -418,6 +420,7 @@ SPEC REPOS:
     - libPhoneNumber-iOS
     - MBProgressHUD
     - nanopb
+    - OneSignal
     - pop
     - ProgressHUD
     - PromisesObjC
@@ -456,6 +459,7 @@ SPEC CHECKSUMS:
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
+  OneSignal: 7dfe466265c05f02b95a274b9c997a0619ad2117
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   ProgressHUD: e603e8b8622c47d8818b9fb38b3cfe9d3e7ca421
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
@@ -463,6 +467,6 @@ SPEC CHECKSUMS:
   SCSiriWaveformView: 15b9dd6f94c7536e2032b34a35c6ff74d38c7411
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
 
-PODFILE CHECKSUM: 1ef4cda8e32a5a9fae1c145a7b66196b687474cc
+PODFILE CHECKSUM: 3d24b242e00e6788e60c33e5b65d4f9b0f0ca806
 
 COCOAPODS: 1.9.3

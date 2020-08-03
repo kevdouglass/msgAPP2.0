@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import CoreLocation /// access user location -> must include its delegate * CLLocationManagerDelegate *
+import OneSignal
 
 
 
@@ -47,21 +48,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             }
   
         })
-
+        
+        
+        
+        /// CALL OneSignal Here to run in App
+        /*      --------->>>>   Function inside Function !!!!!!!!!!!!!           */
+        func userDidLogin(userId: String) {
+            self.startOneSignal()   // set OneSignal Id everytime user login
+        }
+        
+        // ns notification center - server
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(USER_DID_LOGIN_NOTIFICATION), object: nil, queue: nil) { (note) in
+            /// "radio channel" called every time user logs in
+            // tell "radio listeners" we need to get the user id
+            let userId = note.userInfo![kUSERID] as! String
+            UserDefaults.standard.set(userId, forKey: kUSERID)
+            UserDefaults.standard.synchronize() // ?? Unneceessary
+            
+            print("User has logged in.....................")
+            userDidLogin(userId: userId)
+        }
+        
+/// push notifications (part 1)
+        OneSignal.initWithLaunchOptions(launchOptions, appId: kONESIGNALAPPID)
+        
+    
         return true
     }
     
-    
+ ///////////////////-------------------------------------------------------------------------------------------------------------------
     
     
     //MARK: LOCATION services *permissions*
     func applicationDidBecomeActive(_ application: UIApplication) {
+        // as soon as it becomes active change user status to "ONLINE"
+        //check if we have a current user
+        if FUser.currentUser() != nil {
+            updateCurrentUserInFirestore(withValues: [kISONLINE : true]) { (success) in
+            }
+        }
+        
         locationManagerStart() // ask user for location permission
         
     }
     //func sceneDidBecomeActive()
     
     func applicationDidEnterBackground(_ application: UIApplication) {
+        // as soon as it becomes de-active change user status to "OFFLINE"
+        // check if current user is unavailable
+        if FUser.currentUser() != nil {
+            updateCurrentUserInFirestore(withValues: [kISONLINE : false]) { (success) in
+            }
+        }
+        
         locationManagerStop()
     }
     /// end of location services *permission*
@@ -157,6 +196,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // coordinates are always equal to our "Latest corrdinate on our device
         // last object in our CLLOcation array is our most *recent* location
         coordinates = locations.last!.coordinate /// returns the latest coordinate
+    }
+    
+    //MARK: OneSignal Notifications
+    func startOneSignal() {
+        // to get our OneSignalUserID
+        // so we can send specific notifications to that USER id
+        let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
+       
+        /// get user id from OneSignal
+        let userID = status.subscriptionStatus.userId
+        ///get push token
+        let pushToken = status.subscriptionStatus.pushToken
+        
+        
+        if pushToken != nil {
+            // not nil if we are connected to OneSignal
+            // check if we have USER id
+            if let playerID = userID {
+                // save it in user default
+                UserDefaults.standard.set(playerID, forKey: kPUSHID)
+            } else {
+                UserDefaults.standard.removeObject(forKey: kPUSHID)
+            }
+            /// update our user defaults
+            UserDefaults.standard.synchronize()
+        }
+        // update OneSignal ID
+        updateOneSignalId()
+
     }
    
 

@@ -849,8 +849,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         
         
         // get last 11 messages, about what we can fit on the view controller. we will have another way to store the previous in the background
-        reference(.Message).document(FUser.currentId()).collection(chatRoomId).order(by: kDATE, descending: true).limit(to: 11)
-            .getDocuments { (snapshotOfEleven, error) in
+        reference(.Message).document(FUser.currentId()).collection(chatRoomId).order(by: kDATE, descending: true).limit(to: 11).getDocuments { (snapshotOfEleven, error) in
                 
                 // check if we get any snapshot back
                 guard let snapshotOfEleven = snapshotOfEleven else {
@@ -858,7 +857,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
                     self.initialLoadComplete = true
                     /// listen for new chats
                     self.listenForNewChats()
-                    print("initial loading of messages is done.")
+                   // print("initial loading of messages is done.")
 
                     
                     
@@ -981,8 +980,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
                 guard let snapshot = snapshot else { return }
                 
                 // sort through dictioary
-                let sorted = ((dictionaryFromSnapshots(snapshots: snapshot.documents)) as NSArray).sortedArray(
-                    using: [NSSortDescriptor(key: kDATE, ascending: true)]) as! [NSDictionary] /// get all sorted in dictionary
+                let sorted = ((dictionaryFromSnapshots(snapshots: snapshot.documents)) as NSArray).sortedArray(using: [NSSortDescriptor(key: kDATE, ascending: true)]) as! [NSDictionary] /// get all sorted in dictionary
                 
                 self.loadedMessage = self.removeBadMessages(allmessagesArray: sorted) + self.loadedMessage
                 
@@ -1018,7 +1016,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         }
         
         // mark: create a message
-        for idx in minimumMessageNumber..<maxMessagesNumber {
+        for idx in minimumMessageNumber ..< maxMessagesNumber {
             let messageDictionary = loadedMessage[idx]
             
             // insert Message into array
@@ -1027,6 +1025,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
             loadedMessagesCount += 1    // loads one message to dictionary (10 + 1)
         }
         
+        /// >>>>>>>>>>>>>>>>>>>>>>>>>>>>                CHANGED from ( != )
         self.showLoadEarlierMessagesHeader = (loadedMessagesCount != loadedMessage.count)
         
     }
@@ -1107,8 +1106,10 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
             // go through old messages array and reverse order
             let idx_messageDictionary = loadedMessage[idx]
             insertNewMessage(messageDictionary: idx_messageDictionary)
+            //loadedMessagesCount += 1
         }
         oldLoad = true
+        
         self.showLoadEarlierMessagesHeader = (loadedMessagesCount != loadedMessage.count)
     }
     
@@ -1462,8 +1463,13 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
             }
         }
     }
+ 
     
-    
+//    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        let headerSize = CGRect(x: 0, y: 0, width: 40, height: 40) as! CGRect
+//        retun headerSize
+//
+//    }
     
     //MARK: Create a JSQ avatar
     func createJSQAvatars(avatarDictionary: NSMutableDictionary?) {

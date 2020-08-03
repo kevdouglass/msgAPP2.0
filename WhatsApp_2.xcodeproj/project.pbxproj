@@ -38,6 +38,9 @@
 		0C44EB8A24A2CDBB006FFD40 /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44EB8924A2CDBB006FFD40 /* VideoMessage.swift */; };
 		0C4704C22491DE03004895D8 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4704C12491DE03004895D8 /* Recent.swift */; };
 		0CAC836224B5727000DD3FBC /* Encryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAC836124B5727000DD3FBC /* Encryption.swift */; };
+		0CAC836524B7DAE800DD3FBC /* PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAC836424B7DAE800DD3FBC /* PushNotifications.swift */; };
+		0CAC836D24B7F2E100DD3FBC /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAC836C24B7F2E100DD3FBC /* NotificationService.swift */; };
+		0CAC837124B7F2E100DD3FBC /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0CAC836A24B7F2E100DD3FBC /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0CE5447624B2F9AD00EF1980 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447524B2F9AD00EF1980 /* ContactsTableViewController.swift */; };
 		0CE5447824B303B000EF1980 /* CountryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447724B303B000EF1980 /* CountryCode.swift */; };
 		0CE5447A24B3C7F900EF1980 /* GroupMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447924B3C7F900EF1980 /* GroupMemberCollectionViewCell.swift */; };
@@ -45,10 +48,36 @@
 		0CE5447E24B3F1B600EF1980 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447D24B3F1B600EF1980 /* Group.swift */; };
 		0CE5448024B427A400EF1980 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5447F24B427A400EF1980 /* GroupViewController.swift */; };
 		0CE5448224B534D300EF1980 /* InviteUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5448124B534D300EF1980 /* InviteUsersTableViewController.swift */; };
+		110D24E984D13C55E64711A1 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047B21BFBB1EF69FBDAE7D79 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		F7DEDB7FAEAB38CCB2601FD7 /* Pods_WhatsApp_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0CAC836F24B7F2E100DD3FBC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A521143247EE7D500917F2F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0CAC836924B7F2E100DD3FBC;
+			remoteInfo = OneSignalNotificationServiceExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0CAC837524B7F2E100DD3FBC /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0CAC837124B7F2E100DD3FBC /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		047B21BFBB1EF69FBDAE7D79 /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A52114B247EE7D500917F2F /* WhatsApp_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsApp_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A52114E247EE7D500917F2F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A521150247EE7D500917F2F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +111,12 @@
 		0C44EB8924A2CDBB006FFD40 /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
 		0C4704C12491DE03004895D8 /* Recent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
 		0CAC836124B5727000DD3FBC /* Encryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encryption.swift; sourceTree = "<group>"; };
+		0CAC836324B7C33700DD3FBC /* WhatsApp_2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhatsApp_2.entitlements; sourceTree = "<group>"; };
+		0CAC836424B7DAE800DD3FBC /* PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotifications.swift; sourceTree = "<group>"; };
+		0CAC836A24B7F2E100DD3FBC /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CAC836C24B7F2E100DD3FBC /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		0CAC836E24B7F2E100DD3FBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0CAC837624B7F66000DD3FBC /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		0CE5447524B2F9AD00EF1980 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		0CE5447724B303B000EF1980 /* CountryCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCode.swift; sourceTree = "<group>"; };
 		0CE5447924B3C7F900EF1980 /* GroupMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -90,8 +125,10 @@
 		0CE5447F24B427A400EF1980 /* GroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
 		0CE5448124B534D300EF1980 /* InviteUsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteUsersTableViewController.swift; sourceTree = "<group>"; };
 		0D0FE9371432D843848119D4 /* Pods-WhatsApp_2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsApp_2.release.xcconfig"; path = "Target Support Files/Pods-WhatsApp_2/Pods-WhatsApp_2.release.xcconfig"; sourceTree = "<group>"; };
+		2793F1029FCFCF95A8003D08 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhatsApp_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92D1278F93BE82DA59694EA4 /* Pods-WhatsApp_2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsApp_2.debug.xcconfig"; path = "Target Support Files/Pods-WhatsApp_2/Pods-WhatsApp_2.debug.xcconfig"; sourceTree = "<group>"; };
+		B5FFF87CEAB9D3A708E4E6ED /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +140,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0CAC836724B7F2E100DD3FBC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				110D24E984D13C55E64711A1 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -110,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				0A52114D247EE7D500917F2F /* WhatsApp_2 */,
+				0CAC836B24B7F2E100DD3FBC /* OneSignalNotificationServiceExtension */,
 				0A52114C247EE7D500917F2F /* Products */,
 				9F1093AFCD693A4284DDBEFA /* Pods */,
 				CA2932C50A3317E9ED2823A4 /* Frameworks */,
@@ -120,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				0A52114B247EE7D500917F2F /* WhatsApp_2.app */,
+				0CAC836A24B7F2E100DD3FBC /* OneSignalNotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,6 +174,7 @@
 		0A52114D247EE7D500917F2F /* WhatsApp_2 */ = {
 			isa = PBXGroup;
 			children = (
+				0CAC836324B7C33700DD3FBC /* WhatsApp_2.entitlements */,
 				0A52114E247EE7D500917F2F /* AppDelegate.swift */,
 				0A521150247EE7D500917F2F /* SceneDelegate.swift */,
 				0A521154247EE7D500917F2F /* Main.storyboard */,
@@ -170,6 +218,7 @@
 				0CE5447724B303B000EF1980 /* CountryCode.swift */,
 				0CE5447D24B3F1B600EF1980 /* Group.swift */,
 				0CAC836124B5727000DD3FBC /* Encryption.swift */,
+				0CAC836424B7DAE800DD3FBC /* PushNotifications.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -219,6 +268,16 @@
 			path = SecondaryViews;
 			sourceTree = "<group>";
 		};
+		0CAC836B24B7F2E100DD3FBC /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				0CAC837624B7F66000DD3FBC /* OneSignalNotificationServiceExtension.entitlements */,
+				0CAC836C24B7F2E100DD3FBC /* NotificationService.swift */,
+				0CAC836E24B7F2E100DD3FBC /* Info.plist */,
+			);
+			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
 		0CE5447424B2F8B000EF1980 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +290,8 @@
 			children = (
 				92D1278F93BE82DA59694EA4 /* Pods-WhatsApp_2.debug.xcconfig */,
 				0D0FE9371432D843848119D4 /* Pods-WhatsApp_2.release.xcconfig */,
+				2793F1029FCFCF95A8003D08 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				B5FFF87CEAB9D3A708E4E6ED /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -239,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				2C01D86960BBDF06C3DCDC4B /* Pods_WhatsApp_2.framework */,
+				047B21BFBB1EF69FBDAE7D79 /* Pods_OneSignalNotificationServiceExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -255,15 +317,35 @@
 				0A521148247EE7D500917F2F /* Frameworks */,
 				0A521149247EE7D500917F2F /* Resources */,
 				DB9A39CC49FFAEE713A65F8E /* [CP] Embed Pods Frameworks */,
+				0CAC837524B7F2E100DD3FBC /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0CAC837024B7F2E100DD3FBC /* PBXTargetDependency */,
 			);
 			name = WhatsApp_2;
 			productName = WhatsApp_2;
 			productReference = 0A52114B247EE7D500917F2F /* WhatsApp_2.app */;
 			productType = "com.apple.product-type.application";
+		};
+		0CAC836924B7F2E100DD3FBC /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0CAC837224B7F2E100DD3FBC /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
+			buildPhases = (
+				DB606D41C379F8E32F9D13D9 /* [CP] Check Pods Manifest.lock */,
+				0CAC836624B7F2E100DD3FBC /* Sources */,
+				0CAC836724B7F2E100DD3FBC /* Frameworks */,
+				0CAC836824B7F2E100DD3FBC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OneSignalNotificationServiceExtension;
+			productName = OneSignalNotificationServiceExtension;
+			productReference = 0CAC836A24B7F2E100DD3FBC /* OneSignalNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -271,12 +353,15 @@
 		0A521143247EE7D500917F2F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Kevin Douglass";
 				TargetAttributes = {
 					0A52114A247EE7D500917F2F = {
 						CreatedOnToolsVersion = 11.4.1;
+					};
+					0CAC836924B7F2E100DD3FBC = {
+						CreatedOnToolsVersion = 11.5;
 					};
 				};
 			};
@@ -294,6 +379,7 @@
 			projectRoot = "";
 			targets = (
 				0A52114A247EE7D500917F2F /* WhatsApp_2 */,
+				0CAC836924B7F2E100DD3FBC /* OneSignalNotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -307,6 +393,13 @@
 				0A521163247EE8A000917F2F /* GoogleService-Info.plist in Resources */,
 				0A521158247EE7D700917F2F /* Assets.xcassets in Resources */,
 				0A521156247EE7D500917F2F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0CAC836824B7F2E100DD3FBC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +422,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-WhatsApp_2-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DB606D41C379F8E32F9D13D9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -373,6 +488,7 @@
 				0C2BCF83248E22F700032635 /* UsersTableViewController.swift in Sources */,
 				0A521151247EE7D500917F2F /* SceneDelegate.swift in Sources */,
 				0C1A893724ABEC0200049C5D /* PicturesCollectionViewController.swift in Sources */,
+				0CAC836524B7DAE800DD3FBC /* PushNotifications.swift in Sources */,
 				0C44EB86249AA5A3006FFD40 /* Downloader.swift in Sources */,
 				0CE5447A24B3C7F900EF1980 /* GroupMemberCollectionViewCell.swift in Sources */,
 				0A52116F24805DD600917F2F /* FinishRegistrationViewController.swift in Sources */,
@@ -396,7 +512,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0CAC836624B7F2E100DD3FBC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CAC836D24B7F2E100DD3FBC /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0CAC837024B7F2E100DD3FBC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0CAC836924B7F2E100DD3FBC /* OneSignalNotificationServiceExtension */;
+			targetProxy = 0CAC836F24B7F2E100DD3FBC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		0A521154247EE7D500917F2F /* Main.storyboard */ = {
@@ -536,7 +668,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 92D1278F93BE82DA59694EA4 /* Pods-WhatsApp_2.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WhatsApp_2/WhatsApp_2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V34DW6N2KB;
 				INFOPLIST_FILE = WhatsApp_2/Info.plist;
@@ -555,7 +689,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0D0FE9371432D843848119D4 /* Pods-WhatsApp_2.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WhatsApp_2/WhatsApp_2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V34DW6N2KB;
 				INFOPLIST_FILE = WhatsApp_2/Info.plist;
@@ -565,6 +701,50 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kevindouglass.WhatsApp-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0CAC837324B7F2E100DD3FBC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2793F1029FCFCF95A8003D08 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V34DW6N2KB;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kevindouglass.WhatsApp-2.OneSignalNotificationServiceExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0CAC837424B7F2E100DD3FBC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5FFF87CEAB9D3A708E4E6ED /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V34DW6N2KB;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kevindouglass.WhatsApp-2.OneSignalNotificationServiceExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -587,6 +767,15 @@
 			buildConfigurations = (
 				0A521160247EE7D700917F2F /* Debug */,
 				0A521161247EE7D700917F2F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0CAC837224B7F2E100DD3FBC /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0CAC837324B7F2E100DD3FBC /* Debug */,
+				0CAC837424B7F2E100DD3FBC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

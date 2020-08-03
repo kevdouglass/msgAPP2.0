@@ -40,7 +40,18 @@ target 'WhatsApp_2' do
 	# for Encryption/ Decryption of Data
 	pod 'RNCryptor'
 
+	# push Notifications
+	pod 'OneSignal'
+
+
 
   # Pods for WhatsApp_2
 
+end
+
+
+target 'OneSignalNotificationServiceExtension' do
+	use_frameworks! 
+	#only copy below line
+  	pod 'OneSignal'
 end

@@ -19,7 +19,7 @@ public let APP_STARTED_NOTIFICATION = "AppStartedNotification"
 
 // IDS and Keys
 public let kFILEREFERENCE = "gs://chatapp-360e8.appspot.com"  // file reference to FIrebase photo library
-public let kONESIGNALAPPID = ""
+public let kONESIGNALAPPID = "4edff5f4-2d02-400d-af2f-03b4285a52ec"
 public let kSINCHKEY = ""
 public let kSINCHSECRET = ""
 public let kAPPURL = ""

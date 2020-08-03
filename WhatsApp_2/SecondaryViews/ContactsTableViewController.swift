@@ -86,9 +86,13 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         title = "Contacts"
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.searchController = searchController
+        //navigationItem.compactAppearance =
         
         searchController.searchResultsUpdater = self
+        //searchController.dimsBackgroundDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
+
         definesPresentationContext = true
         
         setupButtons()    // two buttons on the top-right side
@@ -197,8 +201,11 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         if !isGroup {
             // 1 on 1 chat
             // start chatting (if user has not blocked user)
-            if checkBlockedStatus(withUser: userToChat) {
+            if !checkBlockedStatus(withUser: userToChat) {
+                
                 let chatVC = ChatViewController()
+                
+                
                 chatVC.titleName = userToChat.firstname
                 chatVC.memberIds = [FUser.currentId(), userToChat.objectId]
                 chatVC.membersToPush = [FUser.currentId(), userToChat.objectId]
@@ -214,7 +221,8 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
             
         } else {
             // is Group chat
-            // checkMarks when user is clicked
+            // ** checkMarks
+            ///when user is clicked
             if let cell = tableView.cellForRow(at: indexPath) {
                 if cell.accessoryType == .checkmark {
                     cell.accessoryType = .none
@@ -226,7 +234,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
             // add/remove user from th array
             let selected = memberIdsOfGroupChat.contains(userToChat.objectId)
             
-            if selected == true {
+            if selected {
                 let objectIndex = memberIdsOfGroupChat.firstIndex(of: userToChat.objectId)
                 
                 memberIdsOfGroupChat.remove(at: objectIndex!)

@@ -83,8 +83,14 @@ class OutgoingMessage {
         
         // save vidThumb in dictionary because you c ant save "thumbnail" as it is NSDATA and we are expecting base
         myMessageDictionary = NSMutableDictionary(objects: [
-                                                            message, videoLink, vidThumb, senderId, senderName,
-                                                            dateFormatter().string(from: date), status, type ],
+                                                            message,
+                                                            videoLink,
+                                                            vidThumb,
+                                                            senderId,
+                                                            senderName,
+                                                            dateFormatter().string(from: date),
+                                                            status,
+                                                            type ],
                                                   forKeys: [
                                                             kMESSAGE as NSCopying,
                                                             kVIDEO as NSCopying,
@@ -145,7 +151,13 @@ class OutgoingMessage {
         // (2) also update recent chat and dates in "Chats" viewController
         ///update recent *most recent* message
         updateRecents(chatRoomId: chatRoomId, lastMessage: messageDictionary[kMESSAGE] as! String)
-        // (3) send push Notificatiom
+        
+        
+        /* (3) send push Notifications */
+        let pushText = "[\(messageDictionary[kTYPE] as! String) message]"   // this will be our messages (text, audio, video, location, voice message).
+        // will not be able to read message on notification????
+        //will only posting the TYPE of message be better for security purposes? we could possibly loop through the dictionary and get the messageDictionary[kMESSAGE] as! String to display the message???
+        sendPushNotification(memberToPush: membersToPush, message: pushText)
     }
 
     
